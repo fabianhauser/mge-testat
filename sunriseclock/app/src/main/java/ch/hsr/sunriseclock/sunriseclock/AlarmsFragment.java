@@ -1,6 +1,8 @@
 package ch.hsr.sunriseclock.sunriseclock;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +12,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by michi on 19.10.16.
- */
 
 public class AlarmsFragment extends Fragment {
 
@@ -34,6 +32,10 @@ public class AlarmsFragment extends Fragment {
         adapter = new AlarmsAdapter(getAlarms());
         recyclerView.setAdapter(adapter);
 
+
+        FloatingActionButton addButton = (FloatingActionButton) root.findViewById(R.id.add_alarm_fab);
+        addButton.setOnClickListener((FloatingActionButton.OnClickListener) getActivity());
+
         return root;
     }
 
@@ -46,4 +48,11 @@ public class AlarmsFragment extends Fragment {
         return alarms;
     }
 
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof FloatingActionButton.OnClickListener)) {
+            throw new AssertionError("Activity must implement FloatingActionButton.OnClickListener!");
+        }
+    }
 }

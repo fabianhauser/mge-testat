@@ -8,11 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by michi on 19.10.16.
- */
-
-public class AlarmsAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
+public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
     private List<Alarm> alarms;
 
@@ -42,8 +38,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
         return this.alarms != null ? this.alarms.size() : 0;
     }
 
-    public void addAlarm(int position, Alarm alarm) {
-
+    public void addAlarm(Alarm alarm) {
+        this.alarms.add(alarm);
     }
 
     public void removeAlarm(Alarm alarm) {
