@@ -32,7 +32,6 @@ public class AlarmsFragment extends Fragment {
         adapter = new AlarmsAdapter(getAlarms());
         recyclerView.setAdapter(adapter);
 
-
         FloatingActionButton addButton = (FloatingActionButton) root.findViewById(R.id.add_alarm_fab);
         addButton.setOnClickListener((FloatingActionButton.OnClickListener) getActivity());
 
@@ -55,4 +54,5 @@ public class AlarmsFragment extends Fragment {
             throw new AssertionError("Activity must implement FloatingActionButton.OnClickListener!");
         }
     }
+
 }
