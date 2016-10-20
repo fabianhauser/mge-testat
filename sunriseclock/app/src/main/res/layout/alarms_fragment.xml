@@ -18,6 +18,6 @@
          android:padding="@dimen/fab_padding"
         android:layout_gravity="bottom|end"
         android:tint="@android:color/white"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/ic_add_black_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

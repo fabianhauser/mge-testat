@@ -7,10 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
+public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, AlarmsFragment.OnAlarmItemSelectedListener {
 
     FragmentManager manager;
 
@@ -25,11 +27,15 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
-            switchToFragment(new AlarmsFragment());
+            switchToFragment(new AlarmsFragment(), null);
         }
     }
 
-    private void switchToFragment(Fragment fragment) {
+    private void switchToFragment(Fragment fragment, Alarm alarm) {
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.CURRENT_ALARM, alarm);
+        fragment.setArguments(args);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
@@ -44,9 +50,24 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            switchToFragment(new AlarmsFragment());
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // TODO implement back button
+                switchToFragment(new AlarmsFragment(), null);
+                break;
+            case R.id.action_settings:
+                switchToFragment(new ConfigurationFragment(), null);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -55,6 +76,12 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
     @Override
     public void onClick(View v) {
-        switchToFragment(new AlarmDetailFragment());
+        switchToFragment(new AlarmDetailFragment(), null);
+    }
+
+    @Override
+    public void onItemSelected(Alarm alarm) {
+        // TODO add alarm
+        switchToFragment(new AlarmDetailFragment(), alarm);
     }
 }

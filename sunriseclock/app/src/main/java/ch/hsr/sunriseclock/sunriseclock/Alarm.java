@@ -1,9 +1,11 @@
 package ch.hsr.sunriseclock.sunriseclock;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Alarm {
+public class Alarm implements Serializable {
 
     private String name;
     private Date wakeupTime;
@@ -11,8 +13,21 @@ public class Alarm {
     private int lightDuration;
     private List<Weekday> weekdays;
 
+    public void addWeekday(Weekday weekday) {
+        weekdays.add(weekday);
+    }
+
+    public void removeWeekday(Weekday weekday) {
+        weekdays.remove(weekday);
+    }
+
+    public Alarm() {
+
+    }
+
     public Alarm(String name) {
         this.name = name;
+        this.weekdays = new ArrayList<>();
     }
 
     public String getName() {
@@ -33,5 +48,17 @@ public class Alarm {
 
     public Date getWakeupTime() {
         return wakeupTime;
+    }
+
+    public void setWakeupTime(Date wakeupTime) {
+        this.wakeupTime = wakeupTime;
+    }
+
+    public void setEnlightenInterval(int enlightenInterval) {
+        this.enlightenInterval = enlightenInterval;
+    }
+
+    public void setLightDuration(int lightDuration) {
+        this.lightDuration = lightDuration;
     }
 }

@@ -1,6 +1,5 @@
 package ch.hsr.sunriseclock.sunriseclock;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class AlarmsFragment extends Fragment {
+public class AlarmsFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private AlarmsAdapter adapter;
@@ -29,7 +29,7 @@ public class AlarmsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new AlarmsAdapter(getAlarms());
+        adapter = new AlarmsAdapter(getAlarms(), this);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton addButton = (FloatingActionButton) root.findViewById(R.id.add_alarm_fab);
@@ -41,18 +41,34 @@ public class AlarmsFragment extends Fragment {
     /* TODO: Replace with datasource */
     private List<Alarm> getAlarms() {
         final List<Alarm> alarms = new ArrayList<>();
-        alarms.add(new Alarm("Wochentage"));
-        alarms.add(new Alarm("Wochenende"));
+        alarms.add(createDummy("Wochentage"));
+        alarms.add(createDummy("Wochenende"));
 
         return alarms;
     }
 
-    @Override
-    public void onAttach(Context activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof FloatingActionButton.OnClickListener)) {
-            throw new AssertionError("Activity must implement FloatingActionButton.OnClickListener!");
-        }
+    private Alarm createDummy(String name) {
+        Alarm dummy =  new Alarm(name);
+        dummy.setEnlightenInterval(5);
+        dummy.setLightDuration(10);
+        dummy.setWakeupTime(new Date());
+
+        dummy.addWeekday(Weekday.MONDAY);
+        dummy.addWeekday(Weekday.TUESDAY);
+        dummy.addWeekday(Weekday.THURSDAY);
+        dummy.addWeekday(Weekday.SUNDAY);
+
+        return dummy;
     }
 
+    @Override
+    public void onClick(View v) {
+        AlarmViewHolder holder =  (AlarmViewHolder) recyclerView.getChildViewHolder(v);
+        Alarm alarm = adapter.getAlarm(holder.getTextView().getText().toString());
+        ((MainActivity) getActivity()).onItemSelected(alarm);
+    }
+
+    public interface OnAlarmItemSelectedListener {
+        public void onItemSelected(Alarm position);
+    }
 }

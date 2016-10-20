@@ -5,81 +5,107 @@
     android:layout_height="match_parent">
 
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/wakeup_time_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Weckzeit"
-        android:ems="10"
-        android:id="@+id/editText" />
+        android:layout_gravity="center">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText2"
-        android:text="Blendinterval" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Weckzeit"
+            android:ems="10"
+            android:id="@+id/wakeupTimeEditText" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/enlighten_interval_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Lichtdauer"
-        android:ems="10"
-        android:id="@+id/editText3" />
+        android:layout_gravity="center">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/enlightenIntervalEditText"
+            android:hint="Blendinterval" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/light_duration_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Lichtdauer"
+            android:ems="10"
+            android:id="@+id/lightDurationEditText" />
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:text="Wochentage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/weekdaysTextview"
+        android:textSize="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp" />
 
     <CheckBox
         android:text="Montag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox" />
+        android:id="@+id/mondayCheckbox" />
 
     <CheckBox
         android:text="Dienstag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox2" />
+        android:id="@+id/tuesdayCheckbox" />
 
     <CheckBox
         android:text="Mittwoch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox3" />
+        android:id="@+id/wednesdayCheckbox" />
 
     <CheckBox
         android:text="Donnerstag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox4" />
+        android:id="@+id/thursdayCheckbox" />
 
     <CheckBox
         android:text="Freitag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox5" />
+        android:id="@+id/fridayCheckbox" />
 
     <CheckBox
         android:text="Samstag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox6" />
+        android:id="@+id/saturdayCheckbox" />
 
     <CheckBox
         android:text="Sonntag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox7" />
+        android:id="@+id/sundayCheckbox" />
 
     <Button
         android:text="Speichern"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button" />
+        android:id="@+id/saveButton" />
 </LinearLayout>

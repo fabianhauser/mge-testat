@@ -11,9 +11,11 @@ import java.util.List;
 public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
     private List<Alarm> alarms;
+    private View.OnClickListener listener;
 
-    public AlarmsAdapter(List<Alarm> alarms) {
+    public AlarmsAdapter(List<Alarm> alarms, View.OnClickListener onClickListener) {
         this.alarms = alarms;
+        this.listener = onClickListener;
     }
 
     @Override
@@ -24,6 +26,7 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
         TextView textView = (TextView) v.findViewById(R.id.alarm_name_textview);
 
         AlarmViewHolder alarmViewHolder = new AlarmViewHolder(v, textView);
+
         return alarmViewHolder;
     }
 
@@ -31,11 +34,27 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
     public void onBindViewHolder(AlarmViewHolder viewHolder, int position) {
         final Alarm alarm = alarms.get(position);
         viewHolder.textView.setText(alarm.getName());
+        viewHolder.parent.setOnClickListener(listener);
+        if((position % 2 == 0)){
+            viewHolder.parent.setBackgroundColor(R.color.colorItemOdd);
+        }else{
+            viewHolder.parent.setBackgroundColor(R.color.colorItemEven);
+        }
     }
 
     @Override
     public int getItemCount() {
         return this.alarms != null ? this.alarms.size() : 0;
+    }
+
+
+    public Alarm getAlarm(String name) {
+        for (Alarm alarm : this.alarms) {
+            if (alarm.getName().equalsIgnoreCase(name)) {
+                return alarm;
+            }
+        }
+        return null;
     }
 
     public void addAlarm(Alarm alarm) {
