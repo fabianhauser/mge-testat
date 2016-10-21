@@ -12,7 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, AlarmsFragment.OnAlarmItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, AlarmsFragment.OnAlarmItemSelectedListener, AlarmDetailFragment.OnAlarmSavedListener {
 
     FragmentManager manager;
 
@@ -81,9 +81,16 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         switchToFragment(new AlarmDetailFragment(), null);
     }
 
+
     @Override
     public void onItemSelected(Alarm alarm) {
-        // TODO add alarm
+        // TODO get alarm
         switchToFragment(new AlarmDetailFragment(), alarm);
+    }
+
+    @Override
+    public void onAlarmSaved(Alarm alarm) {
+        //TODO save to db
+        System.out.println(alarm);
     }
 }

@@ -17,8 +17,8 @@ public class Alarm implements Serializable {
         weekdays.add(weekday);
     }
 
-    public void removeWeekday(Weekday weekday) {
-        weekdays.remove(weekday);
+    public void clearWeekday() {
+        this.weekdays = new ArrayList<>();
     }
 
     public Alarm() {
