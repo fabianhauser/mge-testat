@@ -15,11 +15,12 @@ import android.widget.EditText;
 import java.text.ParseException;
 import java.util.Date;
 
-import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
 import ch.hsr.sunriseclock.sunriseclock.Constants;
 import ch.hsr.sunriseclock.sunriseclock.MainActivity;
 import ch.hsr.sunriseclock.sunriseclock.R;
+import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
 import ch.hsr.sunriseclock.sunriseclock.domain.Weekday;
+import ch.hsr.sunriseclock.sunriseclock.helper.CustomTimePicker;
 
 import static ch.hsr.sunriseclock.sunriseclock.Constants.timeFormatter;
 
@@ -38,6 +39,9 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        EditText wakeupTimeEditText = (EditText) root.findViewById(R.id.wakeupTimeEditText);
+        CustomTimePicker fromTime = new CustomTimePicker(wakeupTimeEditText, getContext());
+
         Alarm alarm = (Alarm) getArguments().getParcelable(Constants.CURRENT_ALARM);
         fillData(root, alarm);
 
@@ -46,6 +50,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
 
         return root;
     }
+
 
     private void fillData(View fragment, Alarm alarm) {
         if (fragment != null && alarm != null) {

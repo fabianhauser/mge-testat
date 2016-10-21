@@ -34,6 +34,7 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
     @Override
     public void onBindViewHolder(AlarmViewHolder viewHolder, int position) {
+        // TODO Is this the correct alarm?
         final Alarm alarm = alarms.get(position);
         viewHolder.textView.setText(alarm.getName());
         viewHolder.parent.setOnClickListener(listener);
@@ -41,7 +42,11 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
     @Override
     public int getItemCount() {
-        return this.alarms != null ? this.alarms.size() : 0;
+        if (this.alarms != null) {
+            return this.alarms.size();
+        } else {
+            return 0;
+        }
     }
 
 

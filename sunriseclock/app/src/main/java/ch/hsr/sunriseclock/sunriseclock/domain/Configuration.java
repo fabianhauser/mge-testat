@@ -8,7 +8,6 @@ public class Configuration implements Parcelable{
     private String name;
 
     public Configuration() {
-
     }
 
     protected Configuration(Parcel in) {
