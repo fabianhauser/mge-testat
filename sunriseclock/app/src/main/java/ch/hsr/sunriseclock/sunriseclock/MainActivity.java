@@ -12,8 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, AlarmsFragment.OnAlarmItemSelectedListener, AlarmDetailFragment.OnAlarmSavedListener {
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, AlarmsFragment.OnAlarmItemSelectedListener, AlarmDetailFragment.OnAlarmSavedListener, ConfigurationFragment.OnConfigSavedListener {
+
+    ArrayList<Alarm> alarms = new ArrayList<>();
     FragmentManager manager;
 
     @Override
@@ -26,12 +29,20 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        switchToFragment(new AlarmsFragment(), null);
+        // TODO update config
+        String config = "localhost";
+        if (config.isEmpty()) {
+            switchToFragment(new ConfigurationFragment(), null, null);
+        } else {
+            switchToFragment(new AlarmsFragment(), null, null);
+        }
     }
 
-    private void switchToFragment(Fragment fragment, Alarm alarm) {
+    private void switchToFragment(Fragment fragment, Alarm alarm, Configuration configuration) {
         Bundle args = new Bundle();
-        args.putSerializable(Constants.CURRENT_ALARM, alarm);
+        args.putParcelable(Constants.CURRENT_ALARM, alarm);
+        args.putParcelable(Constants.CURRENT_CONFIGURATION, configuration);
+        args.putParcelableArrayList(Constants.ALARM_LIST, alarms);
         fragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -64,33 +75,37 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                // TODO implement back button
-                switchToFragment(new AlarmsFragment(), null);
+                switchToFragment(new AlarmsFragment(), null, null);
                 break;
             case R.id.action_settings:
-                switchToFragment(new ConfigurationFragment(), null);
+                switchToFragment(new ConfigurationFragment(), null, null);
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onClick(View v) {
-        switchToFragment(new AlarmDetailFragment(), null);
+        switchToFragment(new AlarmDetailFragment(), null, null);
     }
-
 
     @Override
     public void onItemSelected(Alarm alarm) {
-        // TODO get alarm
-        switchToFragment(new AlarmDetailFragment(), alarm);
+        switchToFragment(new AlarmDetailFragment(), alarm, null);
     }
 
     @Override
     public void onAlarmSaved(Alarm alarm) {
         //TODO save to db
+        alarms.add(alarm);
         System.out.println(alarm);
+        switchToFragment(new AlarmsFragment(), null, null);
+    }
+
+    @Override
+    public void onConfigSaved(Configuration configuration) {
+        // TODO store configuration permanentyl
+        switchToFragment(new AlarmsFragment(), null, null);
     }
 }

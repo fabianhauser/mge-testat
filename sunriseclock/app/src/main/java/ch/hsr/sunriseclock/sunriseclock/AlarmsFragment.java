@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AlarmsFragment extends Fragment implements View.OnClickListener {
@@ -29,36 +27,14 @@ public class AlarmsFragment extends Fragment implements View.OnClickListener {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new AlarmsAdapter(getAlarms(), this);
+        List<Alarm> alarms = getArguments().getParcelableArrayList(Constants.ALARM_LIST);
+        adapter = new AlarmsAdapter(alarms, this);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton addButton = (FloatingActionButton) root.findViewById(R.id.add_alarm_fab);
         addButton.setOnClickListener((FloatingActionButton.OnClickListener) getActivity());
 
         return root;
-    }
-
-    /* TODO: Replace with datasource */
-    private List<Alarm> getAlarms() {
-        final List<Alarm> alarms = new ArrayList<>();
-        alarms.add(createDummy("Wochentage"));
-        alarms.add(createDummy("Wochenende"));
-
-        return alarms;
-    }
-
-    private Alarm createDummy(String name) {
-        Alarm dummy =  new Alarm(name);
-        dummy.setEnlightenInterval(5);
-        dummy.setLightDuration(10);
-        dummy.setWakeupTime(new Date());
-
-        dummy.addWeekday(Weekday.MONDAY);
-        dummy.addWeekday(Weekday.TUESDAY);
-        dummy.addWeekday(Weekday.THURSDAY);
-        dummy.addWeekday(Weekday.SUNDAY);
-
-        return dummy;
     }
 
     @Override

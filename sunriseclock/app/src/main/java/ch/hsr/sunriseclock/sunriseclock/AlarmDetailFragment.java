@@ -17,10 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by michi on 19.10.16.
- */
-
 public class AlarmDetailFragment extends Fragment implements View.OnClickListener {
 
     private DateFormat formatter = new SimpleDateFormat("hh:mm");
@@ -33,7 +29,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Alarm alarm = saveData();
-        ((MainActivity) getActivity()).onItemSelected(alarm);
+        ((MainActivity) getActivity()).onAlarmSaved(alarm);
     }
 
     @Override
@@ -43,7 +39,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Alarm alarm = (Alarm) getArguments().getSerializable(Constants.CURRENT_ALARM);
+        Alarm alarm = (Alarm) getArguments().getParcelable(Constants.CURRENT_ALARM);
         fillData(root, alarm);
 
         Button saveButton = (Button) root.findViewById(R.id.saveButton);
@@ -54,6 +50,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
 
     private void fillData(View fragment, Alarm alarm) {
         if (fragment != null && alarm != null) {
+            ((EditText) fragment.findViewById(R.id.nameEditText)).setText(alarm.getName());
             ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).setText(formatter.format(alarm.getWakeupTime()));
             ((EditText) fragment.findViewById(R.id.enlightenIntervalEditText)).setText(String.valueOf(alarm.getEnlightenInterval()));
             ((EditText) fragment.findViewById(R.id.lightDurationEditText)).setText(String.valueOf(alarm.getLightDuration()));
@@ -71,10 +68,12 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
         View fragment  =  getView();
 
         Alarm alarm = new Alarm();
+        alarm.setName( ((EditText) fragment.findViewById(R.id.nameEditText)).getText().toString());
 
         Date wakeUpTime = null;
         try {
             wakeUpTime = formatter.parse( ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).getText().toString() );
+            alarm.setWakeupTime(wakeUpTime);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
         }
