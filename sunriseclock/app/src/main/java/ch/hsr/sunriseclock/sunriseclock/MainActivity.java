@@ -26,9 +26,7 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (savedInstanceState == null) {
-            switchToFragment(new AlarmsFragment(), null);
-        }
+        switchToFragment(new AlarmsFragment(), null);
     }
 
     private void switchToFragment(Fragment fragment, Alarm alarm) {
@@ -38,14 +36,16 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    @Override
     public void onBackPressed() {
         if (manager.getBackStackEntryCount() <= 1) {
             finish();
         } else {
-            getFragmentManager().popBackStack();
+            manager.popBackStack();
         }
     }
 
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         switch (item.getItemId()) {
             case android.R.id.home:

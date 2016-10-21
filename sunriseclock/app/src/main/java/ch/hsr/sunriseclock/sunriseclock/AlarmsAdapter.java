@@ -35,11 +35,6 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
         final Alarm alarm = alarms.get(position);
         viewHolder.textView.setText(alarm.getName());
         viewHolder.parent.setOnClickListener(listener);
-        if((position % 2 == 0)){
-            viewHolder.parent.setBackgroundColor(R.color.colorItemOdd);
-        }else{
-            viewHolder.parent.setBackgroundColor(R.color.colorItemEven);
-        }
     }
 
     @Override

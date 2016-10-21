@@ -50,6 +50,8 @@ public class AlarmDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+
+
                 // User chose the "Settings" item, show the app settings UI...
                 // TODO Open Settings
                 return true;
