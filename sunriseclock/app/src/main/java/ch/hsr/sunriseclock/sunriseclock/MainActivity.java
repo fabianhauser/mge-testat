@@ -14,7 +14,16 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, AlarmsFragment.OnAlarmItemSelectedListener, AlarmDetailFragment.OnAlarmSavedListener, ConfigurationFragment.OnConfigSavedListener {
+import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
+import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
+import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmDetailFragment;
+import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmsFragment;
+import ch.hsr.sunriseclock.sunriseclock.fragments.ConfigurationFragment;
+import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmItemSelectedListener;
+import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmSavedListener;
+import ch.hsr.sunriseclock.sunriseclock.listener.OnConfigSavedListener;
+
+public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, OnAlarmItemSelectedListener, OnAlarmSavedListener, OnConfigSavedListener {
 
     ArrayList<Alarm> alarms = new ArrayList<>();
     FragmentManager manager;

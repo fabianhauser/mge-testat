@@ -1,4 +1,4 @@
-package ch.hsr.sunriseclock.sunriseclock;
+package ch.hsr.sunriseclock.sunriseclock.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,19 +12,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
+import ch.hsr.sunriseclock.sunriseclock.Constants;
+import ch.hsr.sunriseclock.sunriseclock.MainActivity;
+import ch.hsr.sunriseclock.sunriseclock.R;
+import ch.hsr.sunriseclock.sunriseclock.domain.Weekday;
+
+import static ch.hsr.sunriseclock.sunriseclock.Constants.timeFormatter;
+
 public class AlarmDetailFragment extends Fragment implements View.OnClickListener {
-
-    private DateFormat formatter = new SimpleDateFormat("hh:mm");
-;
-
-    public interface OnAlarmSavedListener {
-        void onAlarmSaved(Alarm alarm);
-    }
 
     @Override
     public void onClick(View v) {
@@ -51,7 +50,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
     private void fillData(View fragment, Alarm alarm) {
         if (fragment != null && alarm != null) {
             ((EditText) fragment.findViewById(R.id.nameEditText)).setText(alarm.getName());
-            ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).setText(formatter.format(alarm.getWakeupTime()));
+            ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).setText(timeFormatter.format(alarm.getWakeupTime()));
             ((EditText) fragment.findViewById(R.id.enlightenIntervalEditText)).setText(String.valueOf(alarm.getEnlightenInterval()));
             ((EditText) fragment.findViewById(R.id.lightDurationEditText)).setText(String.valueOf(alarm.getLightDuration()));
             ((CheckBox) fragment.findViewById(R.id.mondayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.MONDAY));
@@ -72,7 +71,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
 
         Date wakeUpTime = null;
         try {
-            wakeUpTime = formatter.parse( ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).getText().toString() );
+            wakeUpTime = timeFormatter.parse( ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).getText().toString() );
             alarm.setWakeupTime(wakeUpTime);
         } catch (ParseException e) {
             System.out.println(e.getMessage());

@@ -1,4 +1,4 @@
-package ch.hsr.sunriseclock.sunriseclock;
+package ch.hsr.sunriseclock.sunriseclock.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;

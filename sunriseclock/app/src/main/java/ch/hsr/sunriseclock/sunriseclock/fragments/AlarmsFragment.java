@@ -1,4 +1,4 @@
-package ch.hsr.sunriseclock.sunriseclock;
+package ch.hsr.sunriseclock.sunriseclock.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+
+import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
+import ch.hsr.sunriseclock.sunriseclock.AlarmViewHolder;
+import ch.hsr.sunriseclock.sunriseclock.AlarmsAdapter;
+import ch.hsr.sunriseclock.sunriseclock.Constants;
+import ch.hsr.sunriseclock.sunriseclock.MainActivity;
+import ch.hsr.sunriseclock.sunriseclock.R;
 
 public class AlarmsFragment extends Fragment implements View.OnClickListener {
 
@@ -42,9 +49,5 @@ public class AlarmsFragment extends Fragment implements View.OnClickListener {
         AlarmViewHolder holder =  (AlarmViewHolder) recyclerView.getChildViewHolder(v);
         Alarm alarm = adapter.getAlarm(holder.getTextView().getText().toString());
         ((MainActivity) getActivity()).onItemSelected(alarm);
-    }
-
-    public interface OnAlarmItemSelectedListener {
-        public void onItemSelected(Alarm position);
     }
 }

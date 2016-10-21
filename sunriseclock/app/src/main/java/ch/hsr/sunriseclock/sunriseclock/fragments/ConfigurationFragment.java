@@ -1,4 +1,4 @@
-package ch.hsr.sunriseclock.sunriseclock;
+package ch.hsr.sunriseclock.sunriseclock.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
+import ch.hsr.sunriseclock.sunriseclock.Constants;
+import ch.hsr.sunriseclock.sunriseclock.MainActivity;
+import ch.hsr.sunriseclock.sunriseclock.R;
+
 
 public class ConfigurationFragment extends Fragment implements View.OnClickListener {
-
-    public interface OnConfigSavedListener {
-        public void onConfigSaved(Configuration configuration);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

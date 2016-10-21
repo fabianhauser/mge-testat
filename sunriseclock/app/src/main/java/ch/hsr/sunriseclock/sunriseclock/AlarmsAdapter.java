@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
+
 public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
     private List<Alarm> alarms;
