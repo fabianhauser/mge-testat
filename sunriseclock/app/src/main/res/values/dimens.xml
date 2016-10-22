@@ -6,4 +6,5 @@
     <dimen name="fab_padding">24dp</dimen>
     <dimen name="fab_size">56dp</dimen>
     <dimen name="main_padding">16dp</dimen>
+    <dimen name="checkbox_margin">3dp</dimen>
 </resources>

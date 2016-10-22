@@ -71,7 +71,8 @@
                 android:inputType="number"
                 android:hint="Lichtdauer"
                 android:ems="10"
-                android:id="@+id/lightDurationEditText" />
+                android:id="@+id/lightDurationEditText"
+                android:textSize="18sp" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
@@ -79,59 +80,92 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/weekdaysTextview"
-            android:textSize="18dp"
-            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="10dp"
             android:paddingLeft="10dp" />
-        
-        <CheckBox
-            android:text="Montag"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mondayCheckbox"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:text="Dienstag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tuesdayCheckbox"
-            android:textSize="18sp"/>
+            <CheckBox
+                android:id="@+id/monday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Mo"
+                android:layout_margin="@dimen/checkbox_margin" />
 
-        <CheckBox
-            android:text="Mittwoch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wednesdayCheckbox"
-            android:textSize="18sp"/>
+            <CheckBox
+                android:id="@+id/tuesday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Di"
+                android:layout_margin="@dimen/checkbox_margin" />
 
-        <CheckBox
-            android:text="Donnerstag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/thursdayCheckbox"
-            android:textSize="18sp"/>
+            <CheckBox
+                android:id="@+id/wednesday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Mi"
+                android:layout_margin="@dimen/checkbox_margin" />
 
-        <CheckBox
-            android:text="Freitag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fridayCheckbox"
-            android:textSize="18sp"/>
+            <CheckBox
+                android:id="@+id/thursday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Do"
+                android:layout_margin="@dimen/checkbox_margin" />
 
-        <CheckBox
-            android:text="Samstag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/saturdayCheckbox"
-            android:textSize="18sp"/>
+            <CheckBox
+                android:id="@+id/friday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Fr"
+                android:layout_margin="@dimen/checkbox_margin"/>
 
-        <CheckBox
-            android:text="Sonntag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sundayCheckbox"
-            android:textSize="18sp"/>
+            <CheckBox
+                android:id="@+id/saturday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Sa"
+                android:layout_margin="@dimen/checkbox_margin" />
 
+            <CheckBox
+                android:id="@+id/sunday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="So"
+                android:layout_margin="@dimen/checkbox_margin" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

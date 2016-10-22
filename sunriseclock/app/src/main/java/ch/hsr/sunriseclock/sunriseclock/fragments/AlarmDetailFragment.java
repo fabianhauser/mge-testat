@@ -52,13 +52,13 @@ public class AlarmDetailFragment extends Fragment {
             ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).setText(timeFormatter.format(alarm.getWakeupTime()));
             ((EditText) fragment.findViewById(R.id.enlightenIntervalEditText)).setText(String.valueOf(alarm.getEnlightenInterval()));
             ((EditText) fragment.findViewById(R.id.lightDurationEditText)).setText(String.valueOf(alarm.getLightDuration()));
-            ((CheckBox) fragment.findViewById(R.id.mondayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.MONDAY));
-            ((CheckBox) fragment.findViewById(R.id.tuesdayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.TUESDAY));
-            ((CheckBox) fragment.findViewById(R.id.wednesdayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.WEDNESDAY));
-            ((CheckBox) fragment.findViewById(R.id.thursdayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.THURSDAY));
-            ((CheckBox) fragment.findViewById(R.id.fridayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.FRIDAY));
-            ((CheckBox) fragment.findViewById(R.id.saturdayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.SATURDAY));
-            ((CheckBox) fragment.findViewById(R.id.sundayCheckbox)).setChecked(alarm.getWeekdays().contains(Weekday.SUNDAY));
+            ((CheckBox) fragment.findViewById(R.id.monday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.MONDAY));
+            ((CheckBox) fragment.findViewById(R.id.tuesday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.TUESDAY));
+            ((CheckBox) fragment.findViewById(R.id.wednesday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.WEDNESDAY));
+            ((CheckBox) fragment.findViewById(R.id.thursday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.THURSDAY));
+            ((CheckBox) fragment.findViewById(R.id.fragment_container)).setChecked(alarm.getWeekdays().contains(Weekday.FRIDAY));
+            ((CheckBox) fragment.findViewById(R.id.saturday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.SATURDAY));
+            ((CheckBox) fragment.findViewById(R.id.sunday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.SUNDAY));
         }
     }
 
@@ -84,25 +84,25 @@ public class AlarmDetailFragment extends Fragment {
 
         alarm.clearWeekday();
 
-        if (((CheckBox)fragment.findViewById(R.id.mondayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.monday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.MONDAY);
         }
-        if (((CheckBox)fragment.findViewById(R.id.tuesdayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.tuesday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.TUESDAY);
         }
-        if (((CheckBox)fragment.findViewById(R.id.wednesdayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.wednesday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.WEDNESDAY);
         }
-        if (((CheckBox)fragment.findViewById(R.id.thursdayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.thursday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.THURSDAY);
         }
-        if (((CheckBox)fragment.findViewById(R.id.fridayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.friday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.FRIDAY);
         }
-        if (((CheckBox)fragment.findViewById(R.id.saturdayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.saturday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.SATURDAY);
         }
-        if (((CheckBox)fragment.findViewById(R.id.sundayCheckbox)).isChecked()) {
+        if (((CheckBox)fragment.findViewById(R.id.sunday_checkbox)).isChecked()) {
             alarm.addWeekday(Weekday.SUNDAY);
         }
 
