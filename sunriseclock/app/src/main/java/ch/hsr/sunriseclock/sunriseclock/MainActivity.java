@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         // TODO update config
         String config = "localhost";
@@ -101,18 +100,23 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
     }
 
     public void saveAlarm(Alarm alarm) {
+        if (!alarms.contains(alarm)) {
+            alarms.add(alarm);
+        }
+
         // TODO save alarm
-        alarms.add(alarm);
         switchToFragment(new AlarmsFragment(), null, null);
     }
 
     @Override
     public void onClick(View v) {
+        // create new alarm
         switchToFragment(new AlarmDetailFragment(), null, null);
     }
 
     @Override
     public void onItemSelected(Alarm alarm) {
+        // edit existing alarm
         switchToFragment(new AlarmDetailFragment(), alarm, null);
     }
 }

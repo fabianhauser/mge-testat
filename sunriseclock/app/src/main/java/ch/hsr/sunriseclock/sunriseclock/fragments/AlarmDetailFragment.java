@@ -2,6 +2,7 @@ package ch.hsr.sunriseclock.sunriseclock.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -21,9 +21,10 @@ import ch.hsr.sunriseclock.sunriseclock.R;
 import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
 import ch.hsr.sunriseclock.sunriseclock.domain.Weekday;
 import ch.hsr.sunriseclock.sunriseclock.helper.CustomTimePicker;
-import ch.hsr.sunriseclock.sunriseclock.helper.TextValidator;
 
 import static ch.hsr.sunriseclock.sunriseclock.Constants.timeFormatter;
+import static ch.hsr.sunriseclock.sunriseclock.R.id.nameEditText;
+import static ch.hsr.sunriseclock.sunriseclock.R.id.wakeupTimeEditText;
 
 public class AlarmDetailFragment extends Fragment {
 
@@ -39,8 +40,7 @@ public class AlarmDetailFragment extends Fragment {
         Alarm alarm = (Alarm) getArguments().getParcelable(Constants.CURRENT_ALARM);
         fillData(root, alarm);
 
-        addValidateListener(root);
-
+        // show action toolbar
         setHasOptionsMenu(true);
 
         return root;
@@ -48,15 +48,15 @@ public class AlarmDetailFragment extends Fragment {
 
     private void fillData(View fragment, Alarm alarm) {
         if (fragment != null && alarm != null) {
-            ((EditText) fragment.findViewById(R.id.nameEditText)).setText(alarm.getName());
-            ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).setText(timeFormatter.format(alarm.getWakeupTime()));
+            ((EditText) fragment.findViewById(nameEditText)).setText(alarm.getName());
+            ((EditText) fragment.findViewById(wakeupTimeEditText)).setText(timeFormatter.format(alarm.getWakeupTime()));
             ((EditText) fragment.findViewById(R.id.enlightenIntervalEditText)).setText(String.valueOf(alarm.getEnlightenInterval()));
             ((EditText) fragment.findViewById(R.id.lightDurationEditText)).setText(String.valueOf(alarm.getLightDuration()));
             ((CheckBox) fragment.findViewById(R.id.monday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.MONDAY));
             ((CheckBox) fragment.findViewById(R.id.tuesday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.TUESDAY));
             ((CheckBox) fragment.findViewById(R.id.wednesday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.WEDNESDAY));
             ((CheckBox) fragment.findViewById(R.id.thursday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.THURSDAY));
-            ((CheckBox) fragment.findViewById(R.id.fragment_container)).setChecked(alarm.getWeekdays().contains(Weekday.FRIDAY));
+            ((CheckBox) fragment.findViewById(R.id.friday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.FRIDAY));
             ((CheckBox) fragment.findViewById(R.id.saturday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.SATURDAY));
             ((CheckBox) fragment.findViewById(R.id.sunday_checkbox)).setChecked(alarm.getWeekdays().contains(Weekday.SUNDAY));
         }
@@ -66,11 +66,11 @@ public class AlarmDetailFragment extends Fragment {
         View fragment  =  getView();
 
         Alarm alarm = new Alarm();
-        alarm.setName( ((EditText) fragment.findViewById(R.id.nameEditText)).getText().toString());
+        alarm.setName( ((EditText) fragment.findViewById(nameEditText)).getText().toString());
 
         Date wakeUpTime = null;
         try {
-            wakeUpTime = timeFormatter.parse( ((EditText) fragment.findViewById(R.id.wakeupTimeEditText)).getText().toString() );
+            wakeUpTime = timeFormatter.parse( ((EditText) fragment.findViewById(wakeupTimeEditText)).getText().toString() );
             alarm.setWakeupTime(wakeUpTime);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
@@ -109,15 +109,50 @@ public class AlarmDetailFragment extends Fragment {
         return alarm;
     }
 
-    private void addValidateListener(View fragment) {
-        final EditText alarmNameEditText = (EditText) fragment.findViewById(R.id.nameEditText);
-        alarmNameEditText.addTextChangedListener(new TextValidator(alarmNameEditText) {
-            @Override public void validate(TextView textView, String text) {
-                if (alarmNameEditText.getText().toString().isEmpty()) {
-                    alarmNameEditText.setError("You Failed!!");
-                }
+    private boolean validateView() {
+        EditText nameEditText = (EditText) getView().findViewById(R.id.nameEditText);
+        EditText wakeupTimeEditText = (EditText) getView().findViewById(R.id.wakeupTimeEditText);
+        EditText enlightenIntervalEditText = (EditText) getView().findViewById(R.id.enlightenIntervalEditText);
+        EditText lightDurationEditText = (EditText) getView().findViewById(R.id.lightDurationEditText);
+
+        TextInputLayout nameTextInputLayout = (TextInputLayout) getView().findViewById(R.id.name_input_layout);
+        TextInputLayout wakeupTimeTextInputLayout = (TextInputLayout) getView().findViewById(R.id.wakeup_time_input_layout);
+        TextInputLayout enlightenIntervalTextInputLayout = (TextInputLayout) getView().findViewById(R.id.enlighten_interval_input_layout);
+        TextInputLayout lightDurationTextInputLayout = (TextInputLayout) getView().findViewById(R.id.light_duration_input_layout);
+
+        nameTextInputLayout.setErrorEnabled(false);
+        wakeupTimeTextInputLayout.setErrorEnabled(false);
+        enlightenIntervalTextInputLayout.setErrorEnabled(false);
+        lightDurationTextInputLayout.setErrorEnabled(false);
+
+        if (nameEditText.getText().toString().isEmpty()) {
+            nameTextInputLayout.setErrorEnabled(true);
+            nameTextInputLayout.setError("Bitte geben Sie einen Weckernamen ein");
+        }
+
+        if (wakeupTimeEditText.getText().toString().isEmpty() ) {
+            wakeupTimeTextInputLayout.setErrorEnabled(true);
+            wakeupTimeTextInputLayout.setError("Bitte geben Sie eine gültige Zeit ein");
+        } else {
+            try {
+                timeFormatter.parse(wakeupTimeEditText.getText().toString());
+            } catch (ParseException e) {
+                wakeupTimeTextInputLayout.setErrorEnabled(true);
+                wakeupTimeTextInputLayout.setError("Bitte geben Sie eine gültige Zein ein");
             }
-        });
+        }
+
+        if (enlightenIntervalEditText.getText().toString().isEmpty()) {
+            enlightenIntervalTextInputLayout.setErrorEnabled(true);
+            enlightenIntervalTextInputLayout.setError("Bitte geben Sie ein Blendinterval ein");
+        }
+
+        if (lightDurationEditText.getText().toString().isEmpty()) {
+            lightDurationTextInputLayout.setErrorEnabled(true);
+            lightDurationTextInputLayout.setError("Bitte geben Sie eine Lichtdauer ein");
+        }
+
+        return !(nameTextInputLayout.isErrorEnabled() || wakeupTimeTextInputLayout.isErrorEnabled() || enlightenIntervalTextInputLayout.isErrorEnabled() || lightDurationTextInputLayout.isErrorEnabled() );
     }
 
     @Override
@@ -133,25 +168,12 @@ public class AlarmDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save : {
-                ((MainActivity) getActivity()).saveAlarm(getAlarm());
-                return true;
+                if (validateView()) {
+                    ((MainActivity) getActivity()).saveAlarm(getAlarm());
+                }
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Alarm alarm = getAlarm();
-        ((MainActivity) getActivity()).saveAlarm(alarm);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //TODO Load
-        //loadPreferences();
     }
 
     @Override

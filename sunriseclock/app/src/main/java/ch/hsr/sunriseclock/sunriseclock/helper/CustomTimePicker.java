@@ -26,7 +26,7 @@ public class CustomTimePicker implements View.OnFocusChangeListener, TimePickerD
             if (editText != null) {
                 try {
                     String[] times = editText.getText().toString().split(":");
-                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(times[0]) - 1);
+                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(times[0]));
                     calendar.set(Calendar.MINUTE, Integer.parseInt(times[1]));
                 } catch (Exception e) {
 

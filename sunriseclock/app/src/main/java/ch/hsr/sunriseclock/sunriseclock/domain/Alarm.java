@@ -18,6 +18,22 @@ public class Alarm implements Parcelable {
     public Alarm() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Alarm alarm = (Alarm) o;
+
+        return name != null ? name.equals(alarm.name) : alarm.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
+
     protected Alarm(Parcel in) {
         name = in.readString();
         enlightenInterval = in.readInt();

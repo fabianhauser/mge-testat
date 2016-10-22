@@ -52,15 +52,6 @@ public class ConfigurationFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        Configuration configuration = getConfiguration();
-        ((MainActivity) getActivity()).saveConfiguration(configuration);
-    }
-
-
     private Configuration getConfiguration() {
         Configuration configuration = new Configuration();
 
