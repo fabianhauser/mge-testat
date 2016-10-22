@@ -2,52 +2,69 @@ package ch.hsr.sunriseclock.sunriseclock.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
-import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
 import ch.hsr.sunriseclock.sunriseclock.Constants;
 import ch.hsr.sunriseclock.sunriseclock.MainActivity;
 import ch.hsr.sunriseclock.sunriseclock.R;
+import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
 
 
-public class ConfigurationFragment extends Fragment implements View.OnClickListener {
+public class ConfigurationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.configuration_fragment, container, false);
-
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Configuration configuration = (Configuration) getArguments().getParcelable(Constants.CURRENT_CONFIGURATION);
         if (configuration != null) {
             ((EditText) root.findViewById(R.id.hostnameEditText)).setText(configuration.getName());
         }
 
-        Button saveButton = (Button) root.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(this);
+        setHasOptionsMenu(true);
 
         return root;
     }
 
     @Override
-    public void onClick(View v) {
-        Configuration configuration = saveConfiguration();
-        ((MainActivity) getActivity()).onConfigSaved(configuration);
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_save).setVisible(true);
+        menu.findItem(R.id.action_delete).setVisible(false);
+        menu.findItem(R.id.action_settings).setVisible(false);
+
+        super.onPrepareOptionsMenu(menu);
     }
 
-    private Configuration saveConfiguration() {
-        View fragment  =  getView();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save : {
+                Configuration configuration = getConfiguration();
+                ((MainActivity) getActivity()).saveConfiguration(configuration);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Configuration configuration = getConfiguration();
+        ((MainActivity) getActivity()).saveConfiguration(configuration);
+    }
+
+
+    private Configuration getConfiguration() {
         Configuration configuration = new Configuration();
 
-        String hostname = ((EditText) fragment.findViewById(R.id.hostnameEditText)).getText().toString();
+        String hostname = ((EditText) getView().findViewById(R.id.hostnameEditText)).getText().toString();
         configuration.setName(hostname);
 
         return configuration;

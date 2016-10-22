@@ -20,6 +20,7 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
         this.listener = onClickListener;
     }
 
+
     @Override
     public AlarmViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -29,6 +30,8 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
         AlarmViewHolder alarmViewHolder = new AlarmViewHolder(v, textView);
 
+
+
         return alarmViewHolder;
     }
 
@@ -36,8 +39,8 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
     public void onBindViewHolder(AlarmViewHolder viewHolder, int position) {
         // TODO Is this the correct alarm?
         final Alarm alarm = alarms.get(position);
-        viewHolder.textView.setText(alarm.getName());
-        viewHolder.parent.setOnClickListener(listener);
+        viewHolder.getTextView().setText(alarm.getName());
+        viewHolder.getParent().setOnClickListener(listener);
     }
 
     @Override
@@ -49,7 +52,6 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
         }
     }
 
-
     public Alarm getAlarm(String name) {
         for (Alarm alarm : this.alarms) {
             if (alarm.getName().equalsIgnoreCase(name)) {
@@ -58,15 +60,4 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
         }
         return null;
     }
-
-    public void addAlarm(Alarm alarm) {
-        this.alarms.add(alarm);
-    }
-
-    public void removeAlarm(Alarm alarm) {
-        int position = alarms.indexOf(alarm);
-        alarms.remove(position);
-        notifyItemRemoved(position);
-    }
-
 }

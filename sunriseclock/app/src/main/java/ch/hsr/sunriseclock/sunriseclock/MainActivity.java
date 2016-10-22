@@ -20,10 +20,8 @@ import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmDetailFragment;
 import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmsFragment;
 import ch.hsr.sunriseclock.sunriseclock.fragments.ConfigurationFragment;
 import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmItemSelectedListener;
-import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmSavedListener;
-import ch.hsr.sunriseclock.sunriseclock.listener.OnConfigSavedListener;
 
-public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, OnAlarmItemSelectedListener, OnAlarmSavedListener, OnConfigSavedListener {
+public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, OnAlarmItemSelectedListener {
 
     ArrayList<Alarm> alarms = new ArrayList<>();
     FragmentManager manager;
@@ -37,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         // TODO update config
         String config = "localhost";
@@ -79,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 switchToFragment(new AlarmsFragment(), null, null);
@@ -89,9 +85,25 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
             case R.id.action_settings:
                 switchToFragment(new ConfigurationFragment(), null, null);
                 break;
+            case R.id.action_delete:
+                // TODO delete item;
+                break;
+            case R.id.action_save:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveConfiguration(Configuration configuration) {
+        // TODO save configuration
+        switchToFragment(new AlarmsFragment(), null, null);
+    }
+
+    public void saveAlarm(Alarm alarm) {
+        // TODO save alarm
+        alarms.add(alarm);
+        switchToFragment(new AlarmsFragment(), null, null);
     }
 
     @Override
@@ -102,19 +114,5 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
     @Override
     public void onItemSelected(Alarm alarm) {
         switchToFragment(new AlarmDetailFragment(), alarm, null);
-    }
-
-    @Override
-    public void onAlarmSaved(Alarm alarm) {
-        //TODO save to db
-        alarms.add(alarm);
-        System.out.println(alarm);
-        switchToFragment(new AlarmsFragment(), null, null);
-    }
-
-    @Override
-    public void onConfigSaved(Configuration configuration) {
-        // TODO store configuration permanentyl
-        switchToFragment(new AlarmsFragment(), null, null);
     }
 }

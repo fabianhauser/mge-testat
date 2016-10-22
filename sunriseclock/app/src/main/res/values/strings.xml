@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">sunriseclock</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="no_alarms_available">Keine Wecker gefunden</string>
 </resources>

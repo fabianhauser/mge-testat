@@ -8,10 +8,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 
-      <android.support.design.widget.FloatingActionButton
+    <TextView
+        android:id="@+id/empty_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_alarms_available"/>
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_alarm_fab"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"

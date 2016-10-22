@@ -3,14 +3,14 @@ package ch.hsr.sunriseclock.sunriseclock.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -21,36 +21,30 @@ import ch.hsr.sunriseclock.sunriseclock.R;
 import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
 import ch.hsr.sunriseclock.sunriseclock.domain.Weekday;
 import ch.hsr.sunriseclock.sunriseclock.helper.CustomTimePicker;
+import ch.hsr.sunriseclock.sunriseclock.helper.TextValidator;
 
 import static ch.hsr.sunriseclock.sunriseclock.Constants.timeFormatter;
 
-public class AlarmDetailFragment extends Fragment implements View.OnClickListener {
-
-    @Override
-    public void onClick(View v) {
-        Alarm alarm = saveData();
-        ((MainActivity) getActivity()).onAlarmSaved(alarm);
-    }
+public class AlarmDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.alarm_detail_fragment, container, false);
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
+        // Time picker
         EditText wakeupTimeEditText = (EditText) root.findViewById(R.id.wakeupTimeEditText);
         CustomTimePicker fromTime = new CustomTimePicker(wakeupTimeEditText, getContext());
 
+        // fill detail
         Alarm alarm = (Alarm) getArguments().getParcelable(Constants.CURRENT_ALARM);
         fillData(root, alarm);
 
-        Button saveButton = (Button) root.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(this);
+        addValidateListener(root);
+
+        setHasOptionsMenu(true);
 
         return root;
     }
-
 
     private void fillData(View fragment, Alarm alarm) {
         if (fragment != null && alarm != null) {
@@ -68,7 +62,7 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private Alarm saveData() {
+    private Alarm getAlarm() {
         View fragment  =  getView();
 
         Alarm alarm = new Alarm();
@@ -113,6 +107,51 @@ public class AlarmDetailFragment extends Fragment implements View.OnClickListene
         }
 
         return alarm;
+    }
+
+    private void addValidateListener(View fragment) {
+        final EditText alarmNameEditText = (EditText) fragment.findViewById(R.id.nameEditText);
+        alarmNameEditText.addTextChangedListener(new TextValidator(alarmNameEditText) {
+            @Override public void validate(TextView textView, String text) {
+                if (alarmNameEditText.getText().toString().isEmpty()) {
+                    alarmNameEditText.setError("You Failed!!");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_save).setVisible(true);
+        menu.findItem(R.id.action_delete).setVisible(true);
+        menu.findItem(R.id.action_settings).setVisible(false);
+
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save : {
+                ((MainActivity) getActivity()).saveAlarm(getAlarm());
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Alarm alarm = getAlarm();
+        ((MainActivity) getActivity()).saveAlarm(alarm);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO Load
+        //loadPreferences();
     }
 
     @Override
