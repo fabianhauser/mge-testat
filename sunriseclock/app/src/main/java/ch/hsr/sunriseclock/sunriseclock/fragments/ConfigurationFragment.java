@@ -1,6 +1,7 @@
 package ch.hsr.sunriseclock.sunriseclock.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,12 +45,27 @@ public class ConfigurationFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save : {
-                Configuration configuration = getConfiguration();
-                ((MainActivity) getActivity()).saveConfiguration(configuration);
+                if (validateView()) {
+                    ((MainActivity) getActivity()).saveConfiguration(getConfiguration());
+                }
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean validateView() {
+        EditText nameEditText = (EditText) getView().findViewById(R.id.hostnameEditText);
+        TextInputLayout nameTextInputLayout = (TextInputLayout) getView().findViewById(R.id.hostname_text_input_layout);
+
+        nameTextInputLayout.setErrorEnabled(false);
+
+        if (nameEditText.getText().toString().isEmpty()) {
+            nameTextInputLayout.setErrorEnabled(true);
+            nameTextInputLayout.setError("Bitte geben Sie einen Hostnamen ein");
+        }
+
+        return !(nameTextInputLayout.isErrorEnabled());
     }
 
     private Configuration getConfiguration() {
