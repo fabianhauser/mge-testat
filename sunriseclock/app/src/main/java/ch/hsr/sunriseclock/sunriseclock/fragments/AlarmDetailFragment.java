@@ -127,32 +127,37 @@ public class AlarmDetailFragment extends Fragment {
 
         if (nameEditText.getText().toString().isEmpty()) {
             nameTextInputLayout.setErrorEnabled(true);
-            nameTextInputLayout.setError("Bitte geben Sie einen Weckernamen ein");
+            nameTextInputLayout.setError(getString(R.string.alarm_error_name));
         }
 
         if (wakeupTimeEditText.getText().toString().isEmpty() ) {
             wakeupTimeTextInputLayout.setErrorEnabled(true);
-            wakeupTimeTextInputLayout.setError("Bitte geben Sie eine gültige Zeit ein");
+            wakeupTimeTextInputLayout.setError(getString(R.string.alarm_error_time));
         } else {
             try {
                 timeFormatter.parse(wakeupTimeEditText.getText().toString());
             } catch (ParseException e) {
                 wakeupTimeTextInputLayout.setErrorEnabled(true);
-                wakeupTimeTextInputLayout.setError("Bitte geben Sie eine gültige Zein ein");
+                wakeupTimeTextInputLayout.setError(getString(R.string.alarm_error_time));
             }
         }
 
         if (enlightenIntervalEditText.getText().toString().isEmpty()) {
             enlightenIntervalTextInputLayout.setErrorEnabled(true);
-            enlightenIntervalTextInputLayout.setError("Bitte geben Sie ein Blendinterval ein");
+            enlightenIntervalTextInputLayout.setError(getString(R.string.alarm_error_blendinterval));
         }
 
         if (lightDurationEditText.getText().toString().isEmpty()) {
             lightDurationTextInputLayout.setErrorEnabled(true);
-            lightDurationTextInputLayout.setError("Bitte geben Sie eine Lichtdauer ein");
+            lightDurationTextInputLayout.setError(getString(R.string.alarm_error_lightduration));
         }
 
-        return !(nameTextInputLayout.isErrorEnabled() || wakeupTimeTextInputLayout.isErrorEnabled() || enlightenIntervalTextInputLayout.isErrorEnabled() || lightDurationTextInputLayout.isErrorEnabled() );
+        return !(
+                nameTextInputLayout.isErrorEnabled() ||
+                        wakeupTimeTextInputLayout.isErrorEnabled() ||
+                        enlightenIntervalTextInputLayout.isErrorEnabled() ||
+                        lightDurationTextInputLayout.isErrorEnabled()
+        );
     }
 
     @Override

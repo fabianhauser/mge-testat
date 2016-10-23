@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="@string/alarm_lighttime"
+                android:hint="@string/alarm_lightduration"
                 android:ems="10"
                 android:id="@+id/lightDurationEditText"
                 android:textSize="18sp" />

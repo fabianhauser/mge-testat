@@ -7,7 +7,7 @@
     <string name="no_alarms_available">Keine Wecker gefunden. Erstellle doch einen neuen!</string>
     <string name="alarm_name">Wecker Name</string>
     <string name="alarm_blendinterval">Erleuchtungszeit</string>
-    <string name="alarm_lighttime">Lichtdauer</string>
+    <string name="alarm_lightduration">Lichtdauer</string>
     <string name="alarm_time">Weckzeit</string>
     <string name="hostname">Hostanme</string>
     <string name="weekdays">Wochentage</string>
@@ -19,4 +19,8 @@
     <string name="tuesday_short">Di</string>
     <string name="wednesday_short">Mi</string>
     <string name="configuration_hostname_error">Bitte geben Sie einen Hostnamen ein.</string>
+    <string name="alarm_error_blendinterval">Bitte geben Sie ein Blendinterval ein</string>
+    <string name="alarm_error_lightduration">Bitte geben Sie eine Lichtdauer ein</string>
+    <string name="alarm_error_name">Bitte geben Sie einen Weckernamen ein</string>
+    <string name="alarm_error_time">Bitte geben Sie eine gültige Zeit ein</string>
 </resources>

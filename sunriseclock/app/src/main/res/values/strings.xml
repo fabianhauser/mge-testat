@@ -7,7 +7,7 @@
     <string name="alarm_name">Alarm name</string>
     <string name="alarm_time">Alarm time</string>
     <string name="alarm_blendinterval">Blend interval</string>
-    <string name="alarm_lighttime">Enlightment duration</string>
+    <string name="alarm_lightduration">Enlightment duration</string>
     <string name="weekdays">Weekdays</string>
     <string name="hostname">Hostname</string>
     <string name="monday_short">Mon</string>
@@ -18,4 +18,8 @@
     <string name="sunday_short">Sun</string>
     <string name="thursday_short">Thu</string>
     <string name="configuration_hostname_error">Please insert a hostname.</string>
+    <string name="alarm_error_blendinterval">Please insert blend interval</string>
+    <string name="alarm_error_lightduration">Please insert enlightment duration</string>
+    <string name="alarm_error_name">Please insert a valid alarm name</string>
+    <string name="alarm_error_time">Please insert a valid alarm time</string>
 </resources>
