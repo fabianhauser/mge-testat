@@ -7,13 +7,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Alarm implements Parcelable {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class Alarm implements Parcelable {
+    @SerializedName("name")
+    @Expose
     private String name;
+
+    // TODO add enabled to GUI
+    @SerializedName("selected")
+    @Expose
+    private Boolean enabled;
+
+    // TODO make this a serializable, @see(../model/Time.java)
+    @SerializedName("time")
+    @Expose
     private Date wakeupTime;
+
+    @SerializedName("enlightDuration")
+    @Expose
     private int enlightenInterval;
+
+    @SerializedName("lightDuration")
+    @Expose
     private int lightDuration;
-    private List<Weekday> weekdays = new ArrayList<>();
+
+    @SerializedName("weekDays")
+    @Expose
+    private List<WeekDay> weekDays = new ArrayList<>();
 
     public Alarm() {
     }
@@ -64,12 +86,12 @@ public class Alarm implements Parcelable {
         }
     };
 
-    public void addWeekday(Weekday weekday) {
-        weekdays.add(weekday);
+    public void addWeekday(WeekDay weekDay) {
+        weekDays.add(weekDay);
     }
 
     public void clearWeekday() {
-        this.weekdays = new ArrayList<>();
+        this.weekDays = new ArrayList<>();
     }
 
     public void setName(String name) {
@@ -80,8 +102,8 @@ public class Alarm implements Parcelable {
         return this.name;
     }
 
-    public List<Weekday> getWeekdays() {
-        return weekdays;
+    public List<WeekDay> getWeekDays() {
+        return weekDays;
     }
 
     public int getLightDuration() {
