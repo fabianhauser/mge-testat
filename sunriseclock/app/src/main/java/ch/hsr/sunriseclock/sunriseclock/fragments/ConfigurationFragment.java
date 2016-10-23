@@ -62,7 +62,7 @@ public class ConfigurationFragment extends Fragment {
 
         if (nameEditText.getText().toString().isEmpty()) {
             nameTextInputLayout.setErrorEnabled(true);
-            nameTextInputLayout.setError("Bitte geben Sie einen Hostnamen ein");
+            nameTextInputLayout.setError(getString(R.string.configuration_hostname_error));
         }
 
         return !(nameTextInputLayout.isErrorEnabled());

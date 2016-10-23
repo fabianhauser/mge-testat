@@ -17,4 +17,5 @@
     <string name="saturday_short">Sat</string>
     <string name="sunday_short">Sun</string>
     <string name="thursday_short">Thu</string>
+    <string name="configuration_hostname_error">Please insert a hostname.</string>
 </resources>

@@ -18,4 +18,5 @@
     <string name="thursday_short">Do</string>
     <string name="tuesday_short">Di</string>
     <string name="wednesday_short">Mi</string>
+    <string name="configuration_hostname_error">Bitte geben Sie einen Hostnamen ein.</string>
 </resources>
