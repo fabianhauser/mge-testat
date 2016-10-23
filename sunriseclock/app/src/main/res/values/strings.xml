@@ -4,4 +4,17 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
     <string name="no_alarms_available">No alarms could be found. Create a new one!</string>
+    <string name="alarm_name">Alarm name</string>
+    <string name="alarm_time">Alarm time</string>
+    <string name="alarm_blendinterval">Blend interval</string>
+    <string name="alarm_lighttime">Enlightment duration</string>
+    <string name="weekdays">Weekdays</string>
+    <string name="hostname">Hostname</string>
+    <string name="monday_short">Mon</string>
+    <string name="tuesday_short">Tue</string>
+    <string name="wednesday_short">Wed</string>
+    <string name="friday_short">Fri</string>
+    <string name="saturday_short">Sat</string>
+    <string name="sunday_short">Sun</string>
+    <string name="thursday_short">Thu</string>
 </resources>

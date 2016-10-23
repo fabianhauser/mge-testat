@@ -18,6 +18,6 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:text="TextView"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"/>
 </RelativeLayout>
 

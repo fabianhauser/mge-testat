@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Wecker Name"
+                android:hint="@string/alarm_name"
                 android:ems="10"
                 android:id="@+id/nameEditText" />
         </android.support.design.widget.TextInputLayout>
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="time"
-                android:hint="Weckzeit"
+                android:hint="@string/alarm_time"
                 android:ems="10"
                 android:id="@+id/wakeupTimeEditText"
                 android:clickable="false"
@@ -55,7 +55,7 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/enlightenIntervalEditText"
-                android:hint="Blendinterval" />
+                android:hint="@string/alarm_blendinterval" />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -69,14 +69,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="Lichtdauer"
+                android:hint="@string/alarm_lighttime"
                 android:ems="10"
                 android:id="@+id/lightDurationEditText"
                 android:textSize="18sp" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:text="Wochentage"
+            android:text="@string/weekdays"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/weekdaysTextview"
@@ -98,7 +98,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="Mo"
+                android:text="@string/monday_short"
                 android:layout_margin="@dimen/checkbox_margin" />
 
             <CheckBox
@@ -109,7 +109,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="Di"
+                android:text="@string/tuesday_short"
                 android:layout_margin="@dimen/checkbox_margin" />
 
             <CheckBox
@@ -120,7 +120,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="Mi"
+                android:text="@string/wednesday_short"
                 android:layout_margin="@dimen/checkbox_margin" />
 
             <CheckBox
@@ -131,7 +131,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="Do"
+                android:text="@string/thursday_short"
                 android:layout_margin="@dimen/checkbox_margin" />
 
             <CheckBox
@@ -142,7 +142,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="Fr"
+                android:text="@string/friday_short"
                 android:layout_margin="@dimen/checkbox_margin"/>
 
             <CheckBox
@@ -153,7 +153,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="Sa"
+                android:text="@string/saturday_short"
                 android:layout_margin="@dimen/checkbox_margin" />
 
             <CheckBox
@@ -164,7 +164,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="So"
+                android:text="@string/sunday_short"
                 android:layout_margin="@dimen/checkbox_margin" />
         </LinearLayout>
     </LinearLayout>

@@ -5,4 +5,17 @@
     <string name="action_save">Speichern</string>
     <string name="action_settings">Einstellungen</string>
     <string name="no_alarms_available">Keine Wecker gefunden. Erstellle doch einen neuen!</string>
+    <string name="alarm_name">Wecker Name</string>
+    <string name="alarm_blendinterval">Erleuchtungszeit</string>
+    <string name="alarm_lighttime">Lichtdauer</string>
+    <string name="alarm_time">Weckzeit</string>
+    <string name="hostname">Hostanme</string>
+    <string name="weekdays">Wochentage</string>
+    <string name="friday_short">Fr</string>
+    <string name="monday_short">Mo</string>
+    <string name="saturday_short">Sa</string>
+    <string name="sunday_short">So</string>
+    <string name="thursday_short">Do</string>
+    <string name="tuesday_short">Di</string>
+    <string name="wednesday_short">Mi</string>
 </resources>
