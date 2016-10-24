@@ -5,13 +5,24 @@ import android.os.Parcelable;
 
 public class Configuration implements Parcelable{
 
-    private String name;
+    private String hostname;
+    private Integer port;
 
     public Configuration() {
     }
 
     protected Configuration(Parcel in) {
-        name = in.readString();
+        hostname = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(hostname);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Configuration> CREATOR = new Creator<Configuration>() {
@@ -26,21 +37,19 @@ public class Configuration implements Parcelable{
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public Integer getPort() {
+        return port;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
+    public void setPort(Integer port) {
+        this.port = port;
     }
 
-    public String getName() {
-        return this.name;
+    public String getHostname() {
+        return hostname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 }

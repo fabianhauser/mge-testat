@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getConfiguration().getName().equals(Constants.REMOTE_HOST_DEFAULT)) {
+        if (getConfiguration().getHostname().equals(Constants.REMOTE_HOST_DEFAULT)) {
             switchToFragment(new ConfigurationFragment());
         } else {
             switchToFragment(new AlarmsFragment());
@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
     private void storeConfiguration(Configuration configuration) {
         this.configuration = configuration;
-        editor.putString(Constants.REMOTE_HOST_KEY, configuration.getName());
+        editor.putString(Constants.REMOTE_HOST_KEY, configuration.getHostname());
+        editor.putInt(Constants.REMOTE_PORT_KEY, configuration.getPort());
         editor.commit();
     }
 
@@ -155,7 +156,10 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         }
 
         String remoteHostname = localSharedPreferences.getString(Constants.REMOTE_HOST_KEY, Constants.REMOTE_HOST_DEFAULT);
-        configuration.setName(remoteHostname);
+        configuration.setHostname(remoteHostname);
+
+        Integer remotePort = localSharedPreferences.getInt(Constants.REMOTE_PORT_KEY, Constants.REMOTE_PORT_DEFAULT);
+        configuration.setPort(remotePort);
 
         return this.configuration;
     }

@@ -24,7 +24,8 @@ public class ConfigurationFragment extends Fragment {
 
         Configuration configuration = (Configuration) getArguments().getParcelable(Constants.CURRENT_CONFIGURATION);
         if (configuration != null) {
-            ((EditText) root.findViewById(R.id.hostnameEditText)).setText(configuration.getName());
+            ((EditText) root.findViewById(R.id.remote_hostname_edittext)).setText(configuration.getHostname());
+            ((EditText) root.findViewById(R.id.remote_port_edittext)).setText(configuration.getPort().toString());
         }
 
         setHasOptionsMenu(true);
@@ -55,24 +56,38 @@ public class ConfigurationFragment extends Fragment {
     }
 
     private boolean validateView() {
-        EditText nameEditText = (EditText) getView().findViewById(R.id.hostnameEditText);
-        TextInputLayout nameTextInputLayout = (TextInputLayout) getView().findViewById(R.id.hostname_text_input_layout);
+        TextInputLayout hostNameTextInputLayout = (TextInputLayout) getView().findViewById(R.id.remote_hostname_text_input_layout);
+        TextInputLayout portTextInputLayout = (TextInputLayout) getView().findViewById(R.id.remote_port_text_input_layout);
 
-        nameTextInputLayout.setErrorEnabled(false);
+        hostNameTextInputLayout.setErrorEnabled(false);
+        portTextInputLayout.setErrorEnabled(false);
 
+        EditText nameEditText = (EditText) getView().findViewById(R.id.remote_hostname_edittext);
         if (nameEditText.getText().toString().isEmpty()) {
-            nameTextInputLayout.setErrorEnabled(true);
-            nameTextInputLayout.setError(getString(R.string.configuration_hostname_error));
+            hostNameTextInputLayout.setErrorEnabled(true);
+            hostNameTextInputLayout.setError(getString(R.string.configuration_hostname_error));
+        } else {
+            // TODO check pattern
+            //  Patterns.WEB_URL.matcher(your_link).matches();
         }
 
-        return !(nameTextInputLayout.isErrorEnabled());
+        EditText portEditText = (EditText) getView().findViewById(R.id.remote_port_edittext);
+        if (portEditText.getText().toString().isEmpty()) {
+            portTextInputLayout.setErrorEnabled(true);
+            portTextInputLayout.setError(getString(R.string.configuration_port_error));
+        }
+
+        return !(hostNameTextInputLayout.isErrorEnabled() || portTextInputLayout.isErrorEnabled());
     }
 
     private Configuration getConfiguration() {
         Configuration configuration = new Configuration();
 
-        String hostname = ((EditText) getView().findViewById(R.id.hostnameEditText)).getText().toString();
-        configuration.setName(hostname);
+        String hostname = ((EditText) getView().findViewById(R.id.remote_hostname_edittext)).getText().toString();
+        configuration.setHostname(hostname);
+
+        Integer port = Integer.parseInt( ((EditText) getView().findViewById(R.id.remote_port_edittext)).getText().toString() );
+        configuration.setPort(port);
 
         return configuration;
     }

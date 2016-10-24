@@ -30,8 +30,6 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
         AlarmViewHolder alarmViewHolder = new AlarmViewHolder(v, textView);
 
-
-
         return alarmViewHolder;
     }
 
