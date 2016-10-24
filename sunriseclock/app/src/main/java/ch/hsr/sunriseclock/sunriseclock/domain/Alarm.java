@@ -3,12 +3,12 @@ package ch.hsr.sunriseclock.sunriseclock.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Alarm implements Parcelable {
     @SerializedName("name")
@@ -128,5 +128,13 @@ public class Alarm implements Parcelable {
 
     public void setLightDuration(int lightDuration) {
         this.lightDuration = lightDuration;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

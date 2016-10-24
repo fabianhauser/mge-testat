@@ -52,6 +52,7 @@ public class AlarmDetailFragment extends Fragment {
             ((EditText) fragment.findViewById(wakeupTimeEditText)).setText(timeFormatter.format(alarm.getWakeupTime()));
             ((EditText) fragment.findViewById(R.id.enlightenIntervalEditText)).setText(String.valueOf(alarm.getEnlightenInterval()));
             ((EditText) fragment.findViewById(R.id.lightDurationEditText)).setText(String.valueOf(alarm.getLightDuration()));
+            ((CheckBox) fragment.findViewById(R.id.enabled_checkbox)).setChecked(alarm.getEnabled());
             ((CheckBox) fragment.findViewById(R.id.monday_checkbox)).setChecked(alarm.getWeekDays().contains(WeekDay.MONDAY));
             ((CheckBox) fragment.findViewById(R.id.tuesday_checkbox)).setChecked(alarm.getWeekDays().contains(WeekDay.TUESDAY));
             ((CheckBox) fragment.findViewById(R.id.wednesday_checkbox)).setChecked(alarm.getWeekDays().contains(WeekDay.WEDNESDAY));
@@ -81,6 +82,9 @@ public class AlarmDetailFragment extends Fragment {
 
         String lightInterval = ((EditText) fragment.findViewById(R.id.lightDurationEditText)).getText().toString();
         alarm.setEnlightenInterval(Integer.parseInt(lightInterval));
+
+        boolean enabled = ((CheckBox) fragment.findViewById(R.id.enabled_checkbox)).isChecked();
+        alarm.setEnabled(enabled);
 
         alarm.clearWeekday();
 

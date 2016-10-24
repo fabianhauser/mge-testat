@@ -24,4 +24,5 @@
     <string name="alarm_error_time">Please insert a valid alarm time</string>
     <string name="port">Port</string>
     <string name="configuration_port_error">Please enter a remote port</string>
+    <string name="checkbox_enabled">Enabled</string>
 </resources>

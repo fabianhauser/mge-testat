@@ -25,4 +25,5 @@
     <string name="alarm_error_time">Bitte geben Sie eine gültige Zeit ein</string>
     <string name="port">Port</string>
     <string name="configuration_port_error">Bitte geben Sie einen Remote Port ein</string>
+    <string name="checkbox_enabled">Enabled</string>
 </resources>
