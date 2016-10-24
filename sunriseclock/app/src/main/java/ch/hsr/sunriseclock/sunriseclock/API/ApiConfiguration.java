@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import ch.hsr.sunriseclock.sunriseclock.domain.Alarm;
 
-public class Configuration {
+public class ApiConfiguration {
 
     @SerializedName("alarms")
     @Expose
