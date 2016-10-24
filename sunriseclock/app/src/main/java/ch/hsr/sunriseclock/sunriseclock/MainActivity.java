@@ -45,9 +45,7 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO update config
-        String config = "localhost";
-        if (config.isEmpty()) {
+        if (getConfiguration().getName().equals(Constants.REMOTE_HOST_DEFAULT)) {
             switchToFragment(new ConfigurationFragment());
         } else {
             switchToFragment(new AlarmsFragment());
