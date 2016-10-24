@@ -1,5 +1,6 @@
 package ch.hsr.sunriseclock.sunriseclock;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,8 +24,13 @@ import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener, OnAlarmItemSelectedListener {
 
-    ArrayList<Alarm> alarms = new ArrayList<>();
-    FragmentManager manager;
+    private FragmentManager manager;
+    private SharedPreferences localSharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private ArrayList<Alarm> alarms = new ArrayList<>();
+    private Configuration configuration;
+    private Alarm currentAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +39,25 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
         manager = getSupportFragmentManager();
 
+        localSharedPreferences = getSharedPreferences("local_shared_pref", MODE_PRIVATE);
+        editor =  localSharedPreferences.edit();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // TODO update config
         String config = "localhost";
         if (config.isEmpty()) {
-            switchToFragment(new ConfigurationFragment(), null, null);
+            switchToFragment(new ConfigurationFragment());
         } else {
-            switchToFragment(new AlarmsFragment(), null, null);
+            switchToFragment(new AlarmsFragment());
         }
     }
 
-    private void switchToFragment(Fragment fragment, Alarm alarm, Configuration configuration) {
+    private void switchToFragment(Fragment fragment) {
         Bundle args = new Bundle();
-        args.putParcelable(Constants.CURRENT_ALARM, alarm);
+
+        args.putParcelable(Constants.CURRENT_ALARM, currentAlarm);
         args.putParcelable(Constants.CURRENT_CONFIGURATION, configuration);
         args.putParcelableArrayList(Constants.ALARM_LIST, alarms);
         fragment.setArguments(args);
@@ -79,10 +89,10 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                switchToFragment(new AlarmsFragment(), null, null);
+                switchToFragment(new AlarmsFragment());
                 break;
             case R.id.action_settings:
-                switchToFragment(new ConfigurationFragment(), null, null);
+                switchToFragment(new ConfigurationFragment());
                 break;
             case R.id.action_delete:
                 // TODO delete item;
@@ -95,8 +105,28 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
     }
 
     public void saveConfiguration(Configuration configuration) {
-        // TODO save configuration
-        switchToFragment(new AlarmsFragment(), null, null);
+        storeConfiguration(configuration);
+        switchToFragment(new AlarmsFragment());
+    }
+
+    private void storeConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+        editor.putString(Constants.REMOTE_HOST_KEY, configuration.getName());
+        editor.commit();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        storeConfiguration(getConfiguration());
+    }
+
+    @Override
+    public void onResume() {
+        this.configuration = getConfiguration();
+
+        super.onResume();
     }
 
     public void saveAlarm(Alarm alarm) {
@@ -105,18 +135,30 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         }
 
         // TODO save alarm
-        switchToFragment(new AlarmsFragment(), null, null);
+        switchToFragment(new AlarmsFragment());
     }
 
     @Override
     public void onClick(View v) {
         // create new alarm
-        switchToFragment(new AlarmDetailFragment(), null, null);
+        switchToFragment(new AlarmDetailFragment());
     }
 
     @Override
     public void onItemSelected(Alarm alarm) {
+        currentAlarm = alarm;
         // edit existing alarm
-        switchToFragment(new AlarmDetailFragment(), alarm, null);
+        switchToFragment(new AlarmDetailFragment());
+    }
+
+    private Configuration getConfiguration() {
+        if (this.configuration == null) {
+            this.configuration = new Configuration();
+        }
+
+        String remoteHostname = localSharedPreferences.getString(Constants.REMOTE_HOST_KEY, Constants.REMOTE_HOST_DEFAULT);
+        configuration.setName(remoteHostname);
+
+        return this.configuration;
     }
 }

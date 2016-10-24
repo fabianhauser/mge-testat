@@ -11,4 +11,8 @@ public class Constants {
     public static final String CURRENT_CONFIGURATION = "current_configuration";
     public static final String CURRENT_ALARM = "current_alarm";
     public static final String ALARM_LIST = "alarm_list";
+
+
+    public static final String REMOTE_HOST_KEY = "remote_host";
+    public static final String REMOTE_HOST_DEFAULT = "localhost";
 }
