@@ -20,7 +20,7 @@ public class Alarm implements Parcelable {
     @Expose
     private Boolean enabled;
 
-    // TODO make this a serializable, @see(../model/Time.java)
+    // TODO adjust API and webclient to match full date format (and take the time out).
     @SerializedName("time")
     @Expose
     private Date wakeupTime;
