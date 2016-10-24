@@ -14,6 +14,8 @@ public enum WeekDay {
     SATURDAY("saturday"),
     SUNDAY("sunday");
 
+    private String value;
+
     WeekDay(String value) {
         this.value=value;
     }
