@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         if (getConfiguration().getHostname().equals(Constants.REMOTE_HOST_DEFAULT)) {
             switchToFragment(new ConfigurationFragment());
         } else {
-            initAPI(getConfiguration().getName());
+            initAPI(getConfiguration().getHostname());
             switchToFragment(new AlarmsFragment());
         }
     }
