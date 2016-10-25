@@ -132,6 +132,9 @@ public class AlarmDetailFragment extends Fragment {
         if (nameEditText.getText().toString().isEmpty()) {
             nameTextInputLayout.setErrorEnabled(true);
             nameTextInputLayout.setError(getString(R.string.alarm_error_name));
+        } else if(!((MainActivity)getActivity()).alarmNameFree(nameEditText.getText().toString(), getAlarm())) {
+            nameTextInputLayout.setErrorEnabled(true);
+            nameTextInputLayout.setError(getString(R.string.alarm_error_name_taken));
         }
 
         if (wakeupTimeEditText.getText().toString().isEmpty() ) {
@@ -182,9 +185,11 @@ public class AlarmDetailFragment extends Fragment {
                     ((MainActivity) getActivity()).saveAlarm(getAlarm());
                 }
             }
+            break;
             case R.id.action_delete : {
                 ((MainActivity) getActivity()).removeAlarm(getAlarm());
             }
+            break;
         }
         return super.onOptionsItemSelected(item);
     }

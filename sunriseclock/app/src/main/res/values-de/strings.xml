@@ -28,4 +28,5 @@
     <string name="checkbox_enabled">Enabled</string>
     <string name="error_api">Fehler beim Abrufen der Konfiguration vom Wecker.</string>
     <string name="action_refresh">Neu laden</string>
+    <string name="alarm_error_name_taken">Dieser Weckernamen ist bereits vergeben.</string>
 </resources>

@@ -148,6 +148,15 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
     }
 
+    public boolean alarmNameFree(String newName, Alarm currentAlarm) {
+        for(Alarm a : alarms) {
+            if(a.getName().equals(currentAlarm.getName()) && !a.equals(currentAlarm)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void saveAlarm(Alarm alarm) {
         if (!alarms.contains(alarm)) {
             alarms.add(alarm);

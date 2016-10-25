@@ -21,6 +21,7 @@
     <string name="alarm_error_blendinterval">Please insert blend interval</string>
     <string name="alarm_error_lightduration">Please insert enlightment duration</string>
     <string name="alarm_error_name">Please insert a valid alarm name</string>
+    <string name="alarm_error_name_taken">This alarm name is already taken</string>
     <string name="alarm_error_time">Please insert a valid alarm time</string>
     <string name="port">Port</string>
     <string name="configuration_port_error">Please enter a remote port</string>
