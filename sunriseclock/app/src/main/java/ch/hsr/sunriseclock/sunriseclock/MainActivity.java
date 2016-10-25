@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_save:
                 break;
             case R.id.action_refresh:
+                switchToFragment(new AlarmsFragment());
                 retrieveApiConfiguration();
         }
 
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity
 
     public void saveConfiguration(Configuration configuration) {
         storeConfiguration(configuration);
-        retrieveApiConfiguration();
+        retrieveApiConfiguration(true);
     }
 
     private void storeConfiguration(Configuration configuration) {
@@ -150,9 +151,16 @@ public class MainActivity extends AppCompatActivity
     public void saveAlarm(Alarm alarm) {
         if (!alarms.contains(alarm)) {
             alarms.add(alarm);
+        } else {
+            // TODO update alarm
         }
+        //     saveApiConfiguration(); // TODO enable this
+        switchToFragment(new AlarmsFragment());
+    }
 
-        // TODO save alarm
+    public void removeAlarm(Alarm alarm) {
+        alarms.remove(alarm);
+   //     saveApiConfiguration(); // TODO enable this
         switchToFragment(new AlarmsFragment());
     }
 
@@ -197,15 +205,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void retrieveApiConfiguration() {
-        if(api == null) {
+        retrieveApiConfiguration(false);
+    }
+
+    private void retrieveApiConfiguration(boolean newHostname) {
+        if(api == null || newHostname) {
             initApi();
         }
 
+        findViewById(R.id.loading).setVisibility(View.VISIBLE);
         Call<ApiConfiguration> call = this.api.getConfiguration();
-
         call.enqueue(new Callback<ApiConfiguration>() {
             @Override
             public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {
+                findViewById(R.id.loading).setVisibility(View.GONE);
                 if(response.code() != 200) {
                     switchToFragment(new ErrorFragment("Status code " + response.code()));
                 } else {
@@ -218,6 +231,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<ApiConfiguration> call, Throwable t) {
+                findViewById(R.id.loading).setVisibility(View.GONE);
                 switchToFragment(new ErrorFragment(t.getMessage()));
             }
         });
@@ -229,7 +243,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         Call<ApiConfiguration> call = this.api.setConfiguration(apiConfiguration);
-
         call.enqueue(new Callback<ApiConfiguration>() {
             @Override
             public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {

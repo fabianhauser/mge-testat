@@ -182,6 +182,9 @@ public class AlarmDetailFragment extends Fragment {
                     ((MainActivity) getActivity()).saveAlarm(getAlarm());
                 }
             }
+            case R.id.action_delete : {
+                ((MainActivity) getActivity()).removeAlarm(getAlarm());
+            }
         }
         return super.onOptionsItemSelected(item);
     }
