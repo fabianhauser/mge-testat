@@ -49,8 +49,9 @@ public class ConfigurationFragment extends Fragment {
             case R.id.action_save : {
                 if (validateView()) {
                     ((MainActivity) getActivity()).saveConfiguration(getConfiguration());
+                } else {
+                    return true; // cancel
                 }
-                return true;
             }
         }
         return super.onOptionsItemSelected(item);

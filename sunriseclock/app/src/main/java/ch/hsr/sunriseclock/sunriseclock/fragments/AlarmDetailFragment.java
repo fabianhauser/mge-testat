@@ -188,11 +188,17 @@ public class AlarmDetailFragment extends Fragment {
             case R.id.action_save : {
                 if (validateView()) {
                     ((MainActivity) getActivity()).saveAlarm(getAlarm());
+                } else {
+                    return true; // cancel
                 }
             }
             break;
             case R.id.action_delete : {
-                ((MainActivity) getActivity()).removeAlarm(getAlarm());
+                if(alarm != null) { // only delete existing alarm.
+                    ((MainActivity) getActivity()).removeAlarm(alarm);
+                } else {
+                    return true; // cancel
+                }
             }
             break;
         }

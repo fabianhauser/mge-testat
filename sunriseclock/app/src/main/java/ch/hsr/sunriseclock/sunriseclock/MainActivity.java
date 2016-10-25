@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit2.Call;
@@ -67,7 +69,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void switchToFragment(Fragment fragment) {
-        Bundle args = new Bundle();
+        // close open keyboard if any.
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+	Bundle args = new Bundle();
 
         args.putParcelable(Constants.CURRENT_ALARM, currentAlarm);
         args.putParcelable(Constants.CURRENT_CONFIGURATION, configuration);
@@ -110,9 +119,10 @@ public class MainActivity extends AppCompatActivity
                 switchToFragment(new ConfigurationFragment());
                 break;
             case R.id.action_delete:
-                // TODO delete item;
+                manager.popBackStack();
                 break;
             case R.id.action_save:
+                manager.popBackStack();
                 break;
             case R.id.action_refresh:
                 switchToFragment(new AlarmsFragment());
@@ -161,16 +171,16 @@ public class MainActivity extends AppCompatActivity
         if (!alarms.contains(alarm)) {
             alarms.add(alarm);
         } else {
-            // TODO update alarm
+            alarms.set(alarms.indexOf(alarm), alarm);
         }
+        currentAlarm = null; // TODO see construction parameter
+
         //     saveApiConfiguration(); // TODO enable this
-        switchToFragment(new AlarmsFragment());
     }
 
     public void removeAlarm(Alarm alarm) {
         alarms.remove(alarm);
    //     saveApiConfiguration(); // TODO enable this
-        switchToFragment(new AlarmsFragment());
     }
 
     @Override
@@ -181,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemSelected(Alarm alarm) {
-        currentAlarm = alarm;
+        currentAlarm = alarm; // TODO why is this not a constructor parameter? lifecycle?
         // edit existing alarm
         switchToFragment(new AlarmDetailFragment());
     }
