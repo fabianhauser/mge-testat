@@ -12,10 +12,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.ArrayList;
 
 import ch.hsr.sunriseclock.sunriseclock.API.ApiConfiguration;
@@ -27,11 +30,6 @@ import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmsFragment;
 import ch.hsr.sunriseclock.sunriseclock.fragments.ConfigurationFragment;
 import ch.hsr.sunriseclock.sunriseclock.fragments.ErrorFragment;
 import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmItemSelectedListener;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements FloatingActionButton.OnClickListener, OnAlarmItemSelectedListener {
@@ -41,7 +39,9 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences.Editor editor;
 
     private ClockApi api;
-    private ApiConfiguration apiconfiguration;
+    private Gson gson;
+    private Retrofit retrofit;
+    private ApiConfiguration apiConfiguration;
     private ArrayList<Alarm> alarms = new ArrayList<>();
     private Configuration configuration;
     private Alarm currentAlarm;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         manager = getSupportFragmentManager();
 
         localSharedPreferences = getSharedPreferences("local_shared_pref", MODE_PRIVATE);
-        editor =  localSharedPreferences.edit();
+        editor = localSharedPreferences.edit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         if (getConfiguration().getHostname().equals(Constants.REMOTE_HOST_DEFAULT)) {
             switchToFragment(new ConfigurationFragment());
         } else {
-            retrieveApiConfiguration(getConfiguration().getHostname());
+            retrieveApiConfiguration();
         }
     }
 
@@ -76,12 +76,15 @@ public class MainActivity extends AppCompatActivity
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
+        // TODO stacking clear up
         transaction.addToBackStack(null);
+
         transaction.commit();
     }
 
     @Override
     public void onBackPressed() {
+
         if (manager.getBackStackEntryCount() <= 1) {
             finish();
         } else {
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_save:
                 break;
             case R.id.action_refresh:
-                retrieveApiConfiguration(this.configuration.getHostname());
+                retrieveApiConfiguration();
         }
 
         return super.onOptionsItemSelected(item);
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
     public void saveConfiguration(Configuration configuration) {
         storeConfiguration(configuration);
-        retrieveApiConfiguration(configuration.getHostname());
+        retrieveApiConfiguration();
     }
 
     private void storeConfiguration(Configuration configuration) {
@@ -180,17 +183,23 @@ public class MainActivity extends AppCompatActivity
         return this.configuration;
     }
 
-    private void retrieveApiConfiguration(String hostname) {
-        Gson gson = new GsonBuilder()
+    private void initApi() {
+        String hostname = getConfiguration().getHostname();
+
+        gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + hostname + "/api/v2/")
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://" + hostname + "/api/v2/") // TODO really ugly...
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+        api = retrofit.create(ClockApi.class);
+    }
 
-        this.api = retrofit.create(ClockApi.class);
+    private void retrieveApiConfiguration() {
+        if(api == null) {
+            initApi();
+        }
 
         Call<ApiConfiguration> call = this.api.getConfiguration();
 
@@ -200,7 +209,36 @@ public class MainActivity extends AppCompatActivity
                 if(response.code() != 200) {
                     switchToFragment(new ErrorFragment("Status code " + response.code()));
                 } else {
-                    apiconfiguration = response.body();
+                    alarms.clear();
+                    alarms.addAll(response.body().getAlarms());
+                    apiConfiguration = response.body();
+                    switchToFragment(new AlarmsFragment());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiConfiguration> call, Throwable t) {
+                switchToFragment(new ErrorFragment(t.getMessage()));
+            }
+        });
+    }
+
+    private void saveApiConfiguration() {
+        if(api == null) {
+            initApi();
+        }
+
+        Call<ApiConfiguration> call = this.api.setConfiguration(apiConfiguration);
+
+        call.enqueue(new Callback<ApiConfiguration>() {
+            @Override
+            public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {
+                if(response.code() != 200) {
+                    switchToFragment(new ErrorFragment("Status code " + response.code()));
+                } else {
+                    alarms.clear();
+                    alarms.addAll(response.body().getAlarms());
+                    apiConfiguration = response.body();
                     switchToFragment(new AlarmsFragment());
                 }
             }
