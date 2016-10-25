@@ -169,6 +169,7 @@ public class AlarmDetailFragment extends Fragment {
         menu.findItem(R.id.action_save).setVisible(true);
         menu.findItem(R.id.action_delete).setVisible(true);
         menu.findItem(R.id.action_settings).setVisible(false);
+        menu.findItem(R.id.action_refresh).setVisible(false);
 
         super.onPrepareOptionsMenu(menu);
     }

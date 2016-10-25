@@ -16,7 +16,6 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.hsr.sunriseclock.sunriseclock.API.ApiConfiguration;
@@ -26,6 +25,7 @@ import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
 import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmDetailFragment;
 import ch.hsr.sunriseclock.sunriseclock.fragments.AlarmsFragment;
 import ch.hsr.sunriseclock.sunriseclock.fragments.ConfigurationFragment;
+import ch.hsr.sunriseclock.sunriseclock.fragments.ErrorFragment;
 import ch.hsr.sunriseclock.sunriseclock.listener.OnAlarmItemSelectedListener;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity
         if (getConfiguration().getHostname().equals(Constants.REMOTE_HOST_DEFAULT)) {
             switchToFragment(new ConfigurationFragment());
         } else {
-            initAPI(getConfiguration().getHostname());
-            switchToFragment(new AlarmsFragment());
+            retrieveApiConfiguration(getConfiguration().getHostname());
         }
     }
 
@@ -112,6 +111,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.action_save:
                 break;
+            case R.id.action_refresh:
+                retrieveApiConfiguration(this.configuration.getHostname());
         }
 
         return super.onOptionsItemSelected(item);
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 
     public void saveConfiguration(Configuration configuration) {
         storeConfiguration(configuration);
-        switchToFragment(new AlarmsFragment());
+        retrieveApiConfiguration(configuration.getHostname());
     }
 
     private void storeConfiguration(Configuration configuration) {
@@ -179,7 +180,7 @@ public class MainActivity extends AppCompatActivity
         return this.configuration;
     }
 
-    private void initAPI(String hostname) {
+    private void retrieveApiConfiguration(String hostname) {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
@@ -197,14 +198,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {
                 if(response.code() != 200) {
-                    // TODO whoopsie. errorify that!
+                    switchToFragment(new ErrorFragment("Status code " + response.code()));
+                } else {
+                    apiconfiguration = response.body();
+                    switchToFragment(new AlarmsFragment());
                 }
-                apiconfiguration = response.body();
             }
 
             @Override
             public void onFailure(Call<ApiConfiguration> call, Throwable t) {
-                // TODO Log error here since request failed
+                switchToFragment(new ErrorFragment(t.getMessage()));
             }
         });
     }

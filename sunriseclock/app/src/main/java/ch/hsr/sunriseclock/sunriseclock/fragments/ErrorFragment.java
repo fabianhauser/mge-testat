@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import ch.hsr.sunriseclock.sunriseclock.Constants;
 import ch.hsr.sunriseclock.sunriseclock.MainActivity;
@@ -16,17 +17,19 @@ import ch.hsr.sunriseclock.sunriseclock.R;
 import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
 
 
-public class ConfigurationFragment extends Fragment {
+public class ErrorFragment extends Fragment {
+
+    private String errorMessage;
+
+    public ErrorFragment(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.configuration_fragment, container, false);
+        View root = inflater.inflate(R.layout.error_fragment, container, false);
 
-        Configuration configuration = (Configuration) getArguments().getParcelable(Constants.CURRENT_CONFIGURATION);
-        if (configuration != null) {
-            ((EditText) root.findViewById(R.id.remote_hostname_edittext)).setText(configuration.getHostname());
-            ((EditText) root.findViewById(R.id.remote_port_edittext)).setText(configuration.getPort().toString());
-        }
+        ((TextView) root.findViewById(R.id.errorMessage)).setText(this.errorMessage);
 
         setHasOptionsMenu(true);
 
@@ -35,10 +38,10 @@ public class ConfigurationFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_save).setVisible(true);
+        menu.findItem(R.id.action_refresh).setVisible(true);
+        menu.findItem(R.id.action_settings).setVisible(true);
+        menu.findItem(R.id.action_save).setVisible(false);
         menu.findItem(R.id.action_delete).setVisible(false);
-        menu.findItem(R.id.action_settings).setVisible(false);
-        menu.findItem(R.id.action_refresh).setVisible(false);
 
         super.onPrepareOptionsMenu(menu);
     }

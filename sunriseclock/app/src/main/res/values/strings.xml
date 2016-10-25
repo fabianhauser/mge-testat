@@ -25,4 +25,6 @@
     <string name="port">Port</string>
     <string name="configuration_port_error">Please enter a remote port</string>
     <string name="checkbox_enabled">Enabled</string>
+    <string name="error_api">Error while retrieving the configuration from the clock!</string>
+    <string name="action_refresh">Reload</string>
 </resources>

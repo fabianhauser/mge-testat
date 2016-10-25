@@ -26,4 +26,6 @@
     <string name="port">Port</string>
     <string name="configuration_port_error">Bitte geben Sie einen Remote Port ein</string>
     <string name="checkbox_enabled">Enabled</string>
+    <string name="error_api">Fehler beim Abrufen der Konfiguration vom Wecker.</string>
+    <string name="action_refresh">Neu laden</string>
 </resources>
