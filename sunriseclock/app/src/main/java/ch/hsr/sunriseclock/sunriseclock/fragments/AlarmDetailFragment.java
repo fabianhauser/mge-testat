@@ -28,6 +28,8 @@ import static ch.hsr.sunriseclock.sunriseclock.R.id.wakeupTimeEditText;
 
 public class AlarmDetailFragment extends Fragment {
 
+    Alarm alarm;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.alarm_detail_fragment, container, false);
@@ -37,7 +39,7 @@ public class AlarmDetailFragment extends Fragment {
         CustomTimePicker fromTime = new CustomTimePicker(wakeupTimeEditText, getContext());
 
         // fill detail
-        Alarm alarm = (Alarm) getArguments().getParcelable(Constants.CURRENT_ALARM);
+        alarm = (Alarm) getArguments().getParcelable(Constants.CURRENT_ALARM);
         fillData(root, alarm);
 
         // show action toolbar
@@ -66,7 +68,10 @@ public class AlarmDetailFragment extends Fragment {
     private Alarm getAlarm() {
         View fragment  =  getView();
 
-        Alarm alarm = new Alarm();
+        if(alarm == null) {
+            alarm = new Alarm();
+        }
+
         alarm.setName( ((EditText) fragment.findViewById(nameEditText)).getText().toString());
 
         Date wakeUpTime = null;
@@ -132,7 +137,7 @@ public class AlarmDetailFragment extends Fragment {
         if (nameEditText.getText().toString().isEmpty()) {
             nameTextInputLayout.setErrorEnabled(true);
             nameTextInputLayout.setError(getString(R.string.alarm_error_name));
-        } else if(!((MainActivity)getActivity()).alarmNameFree(nameEditText.getText().toString(), getAlarm())) {
+        } else if(!((MainActivity)getActivity()).alarmNameFree(nameEditText.getText().toString(), alarm)){
             nameTextInputLayout.setErrorEnabled(true);
             nameTextInputLayout.setError(getString(R.string.alarm_error_name_taken));
         }

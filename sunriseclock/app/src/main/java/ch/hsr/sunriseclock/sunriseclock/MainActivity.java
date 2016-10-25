@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
 
     public boolean alarmNameFree(String newName, Alarm currentAlarm) {
         for(Alarm a : alarms) {
-            if(a.getName().equals(currentAlarm.getName()) && !a.equals(currentAlarm)) {
+            if(a.getName().equals(newName) && !a.equals(currentAlarm)) {
                 return false;
             }
         }
