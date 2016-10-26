@@ -109,9 +109,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onOptionsItemSelectedCustom(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 switchToFragment(new AlarmsFragment());
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_delete:
                 manager.popBackStack();
                 break;
-            case R.id.action_save:
+            case R.id.action_save: // TODO: This is triggered also if a form error occurred.
                 manager.popBackStack();
                 break;
             case R.id.action_refresh:
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity
                 retrieveApiConfiguration();
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     public void saveConfiguration(Configuration configuration) {
@@ -257,6 +260,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    // TODO this.
     private void saveApiConfiguration() {
         if(api == null) {
             initApi();

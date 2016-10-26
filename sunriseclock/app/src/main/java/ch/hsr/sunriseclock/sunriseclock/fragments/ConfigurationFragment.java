@@ -54,6 +54,7 @@ public class ConfigurationFragment extends Fragment {
                 }
             }
         }
+        ((MainActivity) getActivity()).onOptionsItemSelectedCustom(item);
         return super.onOptionsItemSelected(item);
     }
 

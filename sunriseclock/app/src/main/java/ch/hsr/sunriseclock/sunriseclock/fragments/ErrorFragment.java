@@ -48,14 +48,7 @@ public class ErrorFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save : {
-                if (validateView()) {
-                    ((MainActivity) getActivity()).saveConfiguration(getConfiguration());
-                }
-                return true;
-            }
-        }
+        ((MainActivity) getActivity()).onOptionsItemSelectedCustom(item);
         return super.onOptionsItemSelected(item);
     }
 

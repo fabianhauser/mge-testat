@@ -189,6 +189,7 @@ public class AlarmDetailFragment extends Fragment {
                 if (validateView()) {
                     ((MainActivity) getActivity()).saveAlarm(getAlarm());
                 } else {
+                    // TODO this does currently not work!
                     return true; // cancel
                 }
             }
@@ -202,6 +203,7 @@ public class AlarmDetailFragment extends Fragment {
             }
             break;
         }
+        ((MainActivity) getActivity()).onOptionsItemSelectedCustom(item);
         return super.onOptionsItemSelected(item);
     }
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -63,6 +64,12 @@ public class AlarmsFragment extends Fragment implements View.OnClickListener {
         menu.findItem(R.id.action_settings).setVisible(true);
 
         super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ((MainActivity) getActivity()).onOptionsItemSelectedCustom(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
