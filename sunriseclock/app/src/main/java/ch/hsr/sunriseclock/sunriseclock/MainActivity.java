@@ -70,17 +70,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void switchToFragment(Fragment fragment) {
+        Bundle args = new Bundle();
+        switchToFragment(fragment, args);
+    }
+
+    private void switchToFragment(Fragment fragment, Bundle args) {
         // close open keyboard if any.
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        closeKeyboard();
 
-	Bundle args = new Bundle();
-
-        args.putParcelable(Constants.CURRENT_ALARM, currentAlarm);
         args.putParcelable(Constants.CURRENT_CONFIGURATION, configuration);
+        args.putParcelable(Constants.CURRENT_ALARM, currentAlarm);
         args.putParcelableArrayList(Constants.ALARM_LIST, alarms);
         fragment.setArguments(args);
 
@@ -92,14 +91,27 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    public void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     @Override
     public void onBackPressed() {
 
         if (manager.getBackStackEntryCount() <= 1) {
             finish();
         } else {
-            manager.popBackStack();
+            popBack();
         }
+    }
+
+    public void popBack(){
+        closeKeyboard();
+        manager.popBackStack();
     }
 
     @Override
@@ -123,10 +135,10 @@ public class MainActivity extends AppCompatActivity
                 switchToFragment(new ConfigurationFragment());
                 break;
             case R.id.action_delete:
-                manager.popBackStack();
+                popBack();
                 break;
-            case R.id.action_save: // TODO: This is triggered also if a form error occurred.
-                manager.popBackStack();
+            case R.id.action_save:
+                popBack();
                 break;
             case R.id.action_refresh:
                 switchToFragment(new AlarmsFragment());
@@ -177,14 +189,14 @@ public class MainActivity extends AppCompatActivity
         } else {
             alarms.set(alarms.indexOf(alarm), alarm);
         }
-        currentAlarm = null; // TODO see construction parameter
+        currentAlarm = null;
 
-        //     saveApiConfiguration(); // TODO enable this
+        saveApiConfiguration();
     }
 
     public void removeAlarm(Alarm alarm) {
         alarms.remove(alarm);
-   //     saveApiConfiguration(); // TODO enable this
+        saveApiConfiguration();
     }
 
     @Override
@@ -195,7 +207,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemSelected(Alarm alarm) {
-        currentAlarm = alarm; // TODO why is this not a constructor parameter? lifecycle?
+        currentAlarm = alarm;
         // edit existing alarm
         switchToFragment(new AlarmDetailFragment());
     }
@@ -243,7 +255,7 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {
                 findViewById(R.id.loading).setVisibility(View.GONE);
                 if(response.code() != 200) {
-                    switchToFragment(new ErrorFragment("Status code " + response.code()));
+                    openErrorFragment("Status code " + response.code());
                 } else {
                     alarms.clear();
                     alarms.addAll(response.body().getAlarms());
@@ -255,12 +267,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<ApiConfiguration> call, Throwable t) {
                 findViewById(R.id.loading).setVisibility(View.GONE);
-                switchToFragment(new ErrorFragment(t.getMessage()));
+                openErrorFragment(t.getMessage());
             }
         });
     }
 
-    // TODO this.
     private void saveApiConfiguration() {
         if(api == null) {
             initApi();
@@ -271,19 +282,26 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {
                 if(response.code() != 200) {
-                    switchToFragment(new ErrorFragment("Status code " + response.code()));
+                    openErrorFragment("Status code " + response.code());
                 } else {
                     alarms.clear();
                     alarms.addAll(response.body().getAlarms());
                     apiConfiguration = response.body();
+                    // TODO: This should only happen on launch, if no such fragment is yet here.
                     switchToFragment(new AlarmsFragment());
                 }
             }
 
             @Override
             public void onFailure(Call<ApiConfiguration> call, Throwable t) {
-                switchToFragment(new ErrorFragment(t.getMessage()));
+                openErrorFragment(t.getMessage());
             }
         });
+    }
+
+    private void openErrorFragment(String message) {
+        Bundle args = new Bundle();
+        args.putString(Constants.ERROR_MESSAGE, message);
+        switchToFragment(new ErrorFragment(), args); // TODO: ensure that a return is only done with pop.
     }
 }

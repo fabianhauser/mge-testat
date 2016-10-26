@@ -19,4 +19,7 @@ public class Constants {
     public static final String REMOTE_PORT_KEY = "remote_port";
     public static final Integer REMOTE_PORT_DEFAULT = new Integer(3000);
 
+
+    public static final String ERROR_MESSAGE = "error_message";
+
 }

@@ -12,7 +12,6 @@ public interface ClockApi {
     Call<ApiConfiguration> getConfiguration(); //, Callback<ClockApi> response);
 
 
-    // TODO this must probably be changed to the right Retrofit-Call.
-    @POST("coniguration")
+    @POST("configuration")
     Call<ApiConfiguration> setConfiguration(@Body ApiConfiguration configuration); //, Callback<ClockApi> response);
 }

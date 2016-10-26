@@ -189,7 +189,6 @@ public class AlarmDetailFragment extends Fragment {
                 if (validateView()) {
                     ((MainActivity) getActivity()).saveAlarm(getAlarm());
                 } else {
-                    // TODO this does currently not work!
                     return true; // cancel
                 }
             }

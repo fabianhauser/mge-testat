@@ -21,13 +21,11 @@ public class ErrorFragment extends Fragment {
 
     private String errorMessage;
 
-    public ErrorFragment(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.error_fragment, container, false);
+
+        errorMessage = getArguments().getString(Constants.ERROR_MESSAGE);
 
         ((TextView) root.findViewById(R.id.errorMessage)).setText(this.errorMessage);
 

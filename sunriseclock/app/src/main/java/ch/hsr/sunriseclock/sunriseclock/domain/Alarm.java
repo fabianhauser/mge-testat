@@ -15,7 +15,6 @@ public class Alarm implements Parcelable {
     @Expose
     private String name;
 
-    // TODO add enabled to GUI
     @SerializedName("selected")
     @Expose
     private Boolean enabled;
