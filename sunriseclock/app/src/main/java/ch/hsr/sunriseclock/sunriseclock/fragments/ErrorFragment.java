@@ -49,41 +49,4 @@ public class ErrorFragment extends Fragment {
         ((MainActivity) getActivity()).onOptionsItemSelectedCustom(item);
         return super.onOptionsItemSelected(item);
     }
-
-    private boolean validateView() {
-        TextInputLayout hostNameTextInputLayout = (TextInputLayout) getView().findViewById(R.id.remote_hostname_text_input_layout);
-        TextInputLayout portTextInputLayout = (TextInputLayout) getView().findViewById(R.id.remote_port_text_input_layout);
-
-        hostNameTextInputLayout.setErrorEnabled(false);
-        portTextInputLayout.setErrorEnabled(false);
-
-        EditText nameEditText = (EditText) getView().findViewById(R.id.remote_hostname_edittext);
-        if (nameEditText.getText().toString().isEmpty()) {
-            hostNameTextInputLayout.setErrorEnabled(true);
-            hostNameTextInputLayout.setError(getString(R.string.configuration_hostname_error));
-        } else {
-            // TODO check pattern
-            //  Patterns.WEB_URL.matcher(your_link).matches();
-        }
-
-        EditText portEditText = (EditText) getView().findViewById(R.id.remote_port_edittext);
-        if (portEditText.getText().toString().isEmpty()) {
-            portTextInputLayout.setErrorEnabled(true);
-            portTextInputLayout.setError(getString(R.string.configuration_port_error));
-        }
-
-        return !(hostNameTextInputLayout.isErrorEnabled() || portTextInputLayout.isErrorEnabled());
-    }
-
-    private Configuration getConfiguration() {
-        Configuration configuration = new Configuration();
-
-        String hostname = ((EditText) getView().findViewById(R.id.remote_hostname_edittext)).getText().toString();
-        configuration.setHostname(hostname);
-
-        Integer port = Integer.parseInt( ((EditText) getView().findViewById(R.id.remote_port_edittext)).getText().toString() );
-        configuration.setPort(port);
-
-        return configuration;
-    }
 }
