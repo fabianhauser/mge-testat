@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity
 
     public void removeAlarm(Alarm alarm) {
         alarms.remove(alarm);
+        currentAlarm = null;
         saveApiConfiguration();
     }
 
