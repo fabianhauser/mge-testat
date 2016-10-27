@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity
             initApi();
         }
 
+        apiConfiguration.setAlarms(alarms);
         Call<ApiConfiguration> call = this.api.setConfiguration(apiConfiguration);
         call.enqueue(new Callback<ApiConfiguration>() {
             @Override
