@@ -17,7 +17,7 @@
     <string name="saturday_short">Sat</string>
     <string name="sunday_short">Sun</string>
     <string name="thursday_short">Thu</string>
-    <string name="configuration_hostname_error">Please insert a hostname.</string>
+    <string name="configuration_hostname_error">Please insert a valid hostname.</string>
     <string name="alarm_error_blendinterval">Please insert blend interval</string>
     <string name="alarm_error_lightduration">Please insert enlightment duration</string>
     <string name="alarm_error_name">Please insert a valid alarm name</string>

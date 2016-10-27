@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import ch.hsr.sunriseclock.sunriseclock.Constants;
 import ch.hsr.sunriseclock.sunriseclock.MainActivity;
 import ch.hsr.sunriseclock.sunriseclock.R;
 import ch.hsr.sunriseclock.sunriseclock.domain.Configuration;
+import okhttp3.HttpUrl;
 
 
 public class ConfigurationFragment extends Fragment {
@@ -70,8 +74,14 @@ public class ConfigurationFragment extends Fragment {
             hostNameTextInputLayout.setErrorEnabled(true);
             hostNameTextInputLayout.setError(getString(R.string.configuration_hostname_error));
         } else {
-            // TODO check pattern
-            //  Patterns.WEB_URL.matcher(your_link).matches();
+            HttpUrl.Builder builder  = new HttpUrl.Builder();
+            try{
+                builder.scheme("http").port(80)
+                        .host(nameEditText.getText().toString()).build();
+            } catch(IllegalArgumentException e) {
+                hostNameTextInputLayout.setErrorEnabled(true);
+                hostNameTextInputLayout.setError(getString(R.string.configuration_hostname_error));
+            }
         }
 
         EditText portEditText = (EditText) getView().findViewById(R.id.remote_port_edittext);
