@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum WeekDay {
-    // TODO adjust JSON to match only selected days (webclient!)
     @SerializedName("monday")
     MONDAY("monday"),
     @SerializedName("tuesday")
