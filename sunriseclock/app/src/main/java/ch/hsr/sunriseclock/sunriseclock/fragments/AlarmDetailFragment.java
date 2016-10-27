@@ -85,8 +85,8 @@ public class AlarmDetailFragment extends Fragment {
         String enlightenInterval = ((EditText) fragment.findViewById(R.id.enlightenIntervalEditText)).getText().toString();
         alarm.setEnlightenInterval(Integer.parseInt(enlightenInterval));
 
-        String lightInterval = ((EditText) fragment.findViewById(R.id.lightDurationEditText)).getText().toString();
-        alarm.setEnlightenInterval(Integer.parseInt(lightInterval));
+        String lightDuration = ((EditText) fragment.findViewById(R.id.lightDurationEditText)).getText().toString();
+        alarm.setLightDuration(Integer.parseInt(lightDuration));
 
         boolean enabled = ((CheckBox) fragment.findViewById(R.id.enabled_checkbox)).isChecked();
         alarm.setEnabled(enabled);

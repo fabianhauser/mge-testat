@@ -283,12 +283,6 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ApiConfiguration> call, Response<ApiConfiguration> response) {
                 if(response.code() != 200) {
                     openErrorFragment("Status code " + response.code());
-                } else {
-                    alarms.clear();
-                    alarms.addAll(response.body().getAlarms());
-                    apiConfiguration = response.body();
-                    // TODO: This should only happen on launch, if no such fragment is yet here.
-                    switchToFragment(new AlarmsFragment());
                 }
             }
 
