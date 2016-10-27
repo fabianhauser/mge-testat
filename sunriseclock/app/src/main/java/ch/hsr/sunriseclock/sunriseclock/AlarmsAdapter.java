@@ -35,7 +35,6 @@ public class AlarmsAdapter extends  RecyclerView.Adapter<AlarmViewHolder> {
 
     @Override
     public void onBindViewHolder(AlarmViewHolder viewHolder, int position) {
-        // TODO Is this the correct alarm?
         final Alarm alarm = alarms.get(position);
         viewHolder.getTextView().setText(alarm.getName());
         viewHolder.getParent().setOnClickListener(listener);
